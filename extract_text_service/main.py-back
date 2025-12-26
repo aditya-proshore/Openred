@@ -1,0 +1,161 @@
+import base64
+import json
+import os
+import tempfile
+import hashlib
+import logging
+from datetime import datetime
+
+from flask import Flask, request, jsonify
+from google.cloud import storage, bigquery
+from pypdf import PdfReader
+
+# -----------------------
+# App + logging
+# -----------------------
+app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("extract")
+
+# -----------------------
+# Config
+# -----------------------
+BUCKET = os.environ.get("BUCKET_NAME", "poc_binod_nl_pdfs")
+RAW_PREFIX = "raw/"
+OUT_PREFIX = "extracted/"
+STATUS_PREFIX = "status/"
+
+BQ_TABLE_ID = "houzr-280014.poc_binod.document_pipeline_status"
+
+storage_client = storage.Client()
+bq_client = bigquery.Client()
+
+# -----------------------
+# Helpers
+# -----------------------
+def make_document_id(bucket, name, generation):
+    raw = f"{bucket}/{name}:{generation}"
+    return hashlib.sha1(raw.encode()).hexdigest()
+
+def out_txt_name(pdf_name):
+    return OUT_PREFIX + pdf_name.rsplit("/", 1)[-1].replace(".pdf", ".txt")
+
+def status_marker_name(pdf_name):
+    return STATUS_PREFIX + pdf_name.rsplit("/", 1)[-1].replace(".pdf", ".status.json")
+
+def has_terminal_marker(bucket, pdf_name):
+    return storage_client.bucket(bucket).blob(status_marker_name(pdf_name)).exists()
+
+def has_been_extracted(bucket, pdf_name):
+    return storage_client.bucket(bucket).blob(out_txt_name(pdf_name)).exists()
+
+def write_status_marker(bucket, pdf_name, status, message="", document_id=None):
+    payload = {
+        "document_id": document_id,
+        "pdf": pdf_name,
+        "status": status,
+        "message": message,
+        "ts": datetime.utcnow().isoformat(),
+    }
+    storage_client.bucket(bucket).blob(
+        status_marker_name(pdf_name)
+    ).upload_from_string(json.dumps(payload), content_type="application/json")
+
+def extract_pdf_to_text(local_path):
+    reader = PdfReader(local_path)
+    texts = []
+    for page in reader.pages:
+        txt = page.extract_text()
+        if txt:
+            texts.append(txt)
+    return "\n\n".join(texts)
+
+def upsert_extract_status(document_id, pdf_name, status, message=""):
+    query = """
+    MERGE houzr-280014.poc_binod.document_pipeline_status T
+    USING (
+      SELECT
+        @document_id AS document_id,
+        @pdf_name AS pdf_name,
+        @status AS extracted_status,
+        @message AS message,
+        CURRENT_TIMESTAMP() AS ts
+    ) S
+    ON T.document_id = S.document_id
+    WHEN MATCHED THEN
+      UPDATE SET extracted_status=S.extracted_status, message=S.message, updated_at=S.ts
+    WHEN NOT MATCHED THEN
+      INSERT (document_id, pdf_name, extracted_status, enrich_status, bq_inserted_status,
+              extracted_retries, enrich_retries, bq_insert_retries, message, created_at, updated_at)
+      VALUES (S.document_id, S.pdf_name, S.extracted_status, "PENDING", "PENDING",
+              0, 0, 0, S.message, S.ts, S.ts)
+    """
+    bq_client.query(
+        query,
+        job_config=bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter("document_id", "STRING", document_id),
+                bigquery.ScalarQueryParameter("pdf_name", "STRING", pdf_name),
+                bigquery.ScalarQueryParameter("status", "STRING", status),
+                bigquery.ScalarQueryParameter("message", "STRING", message),
+            ]
+        ),
+    ).result()
+
+# -----------------------
+# Handler
+# -----------------------
+@app.route("/", methods=["POST"])
+def handler():
+    event = request.get_json(silent=True) or {}
+
+    bucket = event.get("bucket") or event.get("data", {}).get("bucket")
+    record = event.get("name") or event.get("data", {}).get("name")
+    generation = event.get("generation") or event.get("data", {}).get("generation")
+
+    if not bucket or not record:
+        return jsonify({"status": "ignored"}), 200
+
+    if not record.startswith(RAW_PREFIX) or not record.lower().endswith(".pdf"):
+        return jsonify({"status": "ignored"}), 200
+
+    document_id = make_document_id(bucket, record, generation)
+    log = f"[doc={document_id}]"
+    logger.info("%s PDF RECEIVED", log)
+
+    if has_been_extracted(bucket, record) or has_terminal_marker(bucket, record):
+        logger.info("%s TERMINAL — skipping", log)
+        return jsonify({"status": "skipped"}), 200
+
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            local_pdf = os.path.join(tmp, os.path.basename(record))
+            storage_client.bucket(bucket).blob(record).download_to_filename(local_pdf)
+
+            with open(local_pdf, "rb") as f:
+                if f.read(5) != b"%PDF-":
+                    write_status_marker(bucket, record, "INVALID_PDF", document_id=document_id)
+                    upsert_extract_status(document_id, record, "FAILED", "invalid pdf")
+                    logger.warning("%s INVALID PDF", log)
+                    return jsonify({"status": "ignored"}), 200
+
+            text = extract_pdf_to_text(local_pdf)
+            out_blob = storage_client.bucket(bucket).blob(out_txt_name(record))
+            out_blob.metadata = {
+                "document_id": document_id,
+                "source_pdf": record,
+                "stage": "EXTRACT",
+            }
+            out_blob.upload_from_string(text, content_type="text/plain")
+
+            write_status_marker(bucket, record, "EXTRACTED", out_blob.name, document_id)
+            upsert_extract_status(document_id, record, "SUCCESS", "extracted")
+            logger.info("%s TXT UPLOADED", log)
+
+        return jsonify({"status": "ok"}), 200
+
+    except Exception:
+        logger.exception("%s EXTRACT FAILED", log)
+        write_status_marker(bucket, record, "FAILED", "exception", document_id)
+        upsert_extract_status(document_id, record, "FAILED", "exception")
+        return jsonify({"status": "error"}), 200

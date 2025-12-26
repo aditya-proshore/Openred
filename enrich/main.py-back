@@ -1,0 +1,95 @@
+import base64, json, os, re, tempfile, logging, time, random
+from datetime import datetime
+from flask import Flask, request, jsonify
+from google.cloud import storage, bigquery
+from google.api_core.exceptions import BadRequest
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("enrich")
+
+app = Flask(__name__)
+storage_client = storage.Client()
+bq_client = bigquery.Client()
+
+BUCKET = os.environ.get("BUCKET_NAME", "poc_binod_nl_pdfs")
+IN_PREFIX = "extracted/"
+OUT_PREFIX = "enriched/"
+BQ_TABLE_ID = f"{bq_client.project}.poc_binod.document_pipeline_status"
+
+def enrich_dutch_text(text):
+    def f(p): 
+        m = re.search(p, text, re.I)
+        return m.group(1).strip() if m else None
+    return {
+        "project_name": f(r"(project|projectnaam)\s*[:\-]\s*(.+)"),
+        "city": f(r"(stad|plaats|gemeente)\s*[:\-]\s*(.+)"),
+        "organization": f(r"(organisatie|opdrachtgever)\s*[:\-]\s*(.+)"),
+        "date": f(r"(datum|publicatie)\s*[:\-]\s*(.+)"),
+        "budget": f(r"(budget)\s*[:\-]\s*([€\d\.,\s]+)")
+    }
+
+def update_bq_status(document_id, status, message, retries=3):
+    query = f"""
+    UPDATE {BQ_TABLE_ID}
+    SET enrich_status=@status, message=@message, updated_at=CURRENT_TIMESTAMP()
+    WHERE document_id=@document_id
+    """
+    cfg = bigquery.QueryJobConfig(query_parameters=[
+        bigquery.ScalarQueryParameter("document_id", "STRING", document_id),
+        bigquery.ScalarQueryParameter("status", "STRING", status),
+        bigquery.ScalarQueryParameter("message", "STRING", message),
+    ])
+
+    for i in range(retries):
+        try:
+            job = bq_client.query(query, cfg)
+            job.result(timeout=3)
+            if job.num_dml_affected_rows:
+                return
+        except BadRequest as e:
+            if "Too many DML" in str(e):
+                logger.warning("[doc=%s] DML LIMIT — skip", document_id)
+                return
+            raise
+        time.sleep(0.3 * (2 ** i) + random.random() * 0.2)
+
+@app.route("/", methods=["POST"])
+def handler():
+    event = request.get_json(silent=True) or {}
+    bucket = event.get("bucket") or event.get("data", {}).get("bucket")
+    record = event.get("name") or event.get("data", {}).get("name")
+
+    if not bucket or not record:
+        return jsonify({"status": "ignored"}), 200
+    if not record.startswith(IN_PREFIX):
+        return jsonify({"status": "ignored"}), 200
+
+    blob = storage_client.bucket(bucket).blob(record)
+    blob.reload()
+    meta = blob.metadata or {}
+    doc = meta.get("document_id")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        path = os.path.join(tmp, os.path.basename(record))
+        blob.download_to_filename(path)
+        text = open(path, encoding="utf-8", errors="ignore").read()
+        enriched = enrich_dutch_text(text)
+
+        payload = {
+            "document_id": doc,
+            "source_txt": record,
+            "bucket": bucket,
+            "language": "nl",
+            "generated_at": datetime.utcnow().isoformat(),
+            "data": enriched,
+        }
+
+        out = storage_client.bucket(bucket).blob(
+            OUT_PREFIX + os.path.basename(record).replace(".txt", ".json")
+        )
+        out.metadata = {"document_id": doc}
+        out.upload_from_string(json.dumps(payload, ensure_ascii=False))
+
+        update_bq_status(doc, "SUCCESS", "enrich completed")
+
+    return jsonify({"status": "ok"}), 200
