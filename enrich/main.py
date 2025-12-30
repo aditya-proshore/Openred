@@ -4,163 +4,165 @@ import os
 import re
 import tempfile
 import logging
-import time
+import sys
 from datetime import datetime
+from time import sleep
+import random
 
 from flask import Flask, request, jsonify
 from google.cloud import storage, bigquery
+from google.api_core.exceptions import PreconditionFailed
 
-# ------------------------
+# =======================
 # Logging
-# ------------------------
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("enrich")
+# =======================
+logging.basicConfig(
+    level=logging.INFO,
+    stream=sys.stdout,
+    format="%(asctime)s %(levelname)s:%(name)s:%(message)s",
+)
+logger = logging.getLogger()
 
-# ------------------------
-# App setup
-# ------------------------
+# =======================
+# Instance identity
+# =======================
+INSTANCE_ID = f"{os.environ.get('K_REVISION','local')}-{os.environ.get('K_INSTANCE_ID','0')}"
+
+# =======================
+# App & Config
+# =======================
 app = Flask(__name__)
+
+TXT_BUCKET = os.environ.get("TXT_BUCKET", "poc_extracted")
+ENRICH_BUCKET = os.environ.get("ENRICH_BUCKET", "poc_enrich")
+STATUS_BUCKET = os.environ.get("STATUS_BUCKET", "poc_status")
+TXT_PREFIX = "extracted/"
+ENRICH_PREFIX = "enriched/"
+STATUS_PREFIX = "status/"
+BQ_STAGING_TABLE = "houzr-280014.poc_binod.document_pipeline_staging"
+
 storage_client = storage.Client()
 bq_client = bigquery.Client()
 
-# ------------------------
-# Config
-# ------------------------
-BUCKET = os.environ.get("BUCKET_NAME", "poc_binod_nl_pdfs")
-IN_PREFIX = "extracted/"
-OUT_PREFIX = "enriched/"
-STATUS_TABLE_ID = f"{bq_client.project}.poc_binod.document_pipeline_status"
+# =======================
+# Helpers
+# =======================
+def enrich_blob_name(txt_name):
+    return ENRICH_PREFIX + txt_name.rsplit("/",1)[-1].replace(".txt",".json")
 
-# ------------------------
-# Simple Dutch enrichment
-# ------------------------
+def status_marker_name(txt_name):
+    return STATUS_PREFIX + txt_name.rsplit("/",1)[-1].replace(".txt",".status.json")
+
+def write_status_marker(txt_name, status, message, document_id):
+    payload = {
+        "document_id": document_id,
+        "txt": txt_name,
+        "status": status,
+        "message": message,
+        "ts": datetime.utcnow().isoformat()
+    }
+    storage_client.bucket(STATUS_BUCKET).blob(status_marker_name(txt_name)).upload_from_string(
+        json.dumps(payload), content_type="application/json"
+    )
+
 def enrich_dutch_text(text: str) -> dict:
     def find(pattern):
         m = re.search(pattern, text, re.IGNORECASE)
-        return m.group(1).strip() if m else None
-
+        return m.group(2).strip() if m else None
+    sleep(random.uniform(0.05,0.2))  # simulated delay
     return {
         "project_name": find(r"(project|projectnaam)\s*[:\-]\s*(.+)"),
         "city": find(r"(stad|plaats|gemeente)\s*[:\-]\s*(.+)"),
         "organization": find(r"(organisatie|opdrachtgever)\s*[:\-]\s*(.+)"),
         "date": find(r"(datum|publicatie)\s*[:\-]\s*(.+)"),
-        "budget": find(r"(budget)\s*[:\-]\s*([€\d\.,\s]+)")
+        "budget": find(r"(budget)\s*[:\-]\s*([€\d\.,\s]+)"),
     }
 
-# ------------------------
-# BigQuery update with retry
-# ------------------------
-def update_bq_status(document_id, status, message="", max_retries=3):
-    query = f"""
-    UPDATE {STATUS_TABLE_ID}
-    SET enrich_status = @status,
-        message = @message,
-        updated_at = CURRENT_TIMESTAMP()
+def upload_json_to_gcs(blob_name, data, metadata):
+    blob = storage_client.bucket(ENRICH_BUCKET).blob(blob_name)
+    blob.metadata = metadata
+    try:
+        blob.upload_from_string(json.dumps(data), content_type="application/json", if_generation_match=0)
+        return True
+    except PreconditionFailed:
+        return False
+
+# =======================
+# Direct insert into staging table (prevent duplicates)
+# =======================
+def insert_staging_row(document_id, txt_name, status, message):
+    # Check if document_id already exists
+    check_query = f"""
+    SELECT 1 FROM `{BQ_STAGING_TABLE}`
     WHERE document_id = @document_id
+    LIMIT 1
     """
     job_config = bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ScalarQueryParameter("document_id", "STRING", document_id),
-            bigquery.ScalarQueryParameter("status", "STRING", status),
-            bigquery.ScalarQueryParameter("message", "STRING", message),
-        ]
+        query_parameters=[bigquery.ScalarQueryParameter("document_id", "STRING", document_id)]
     )
-    for attempt in range(1, max_retries + 1):
-        job = bq_client.query(query, job_config=job_config)
-        job.result()
-        affected = job.num_dml_affected_rows or 0
-        if affected > 0:
-            logger.info(f"[doc={document_id}] BQ STATUS UPDATED: {status} (attempt {attempt})")
-            return True
-        logger.warning(f"[doc={document_id}] BQ update affected 0 rows (attempt {attempt}/{max_retries})")
-        time.sleep(0.5 * (2 ** (attempt - 1)))
-    logger.error(f"[doc={document_id}] BQ STATUS UPDATE FAILED after {max_retries} retries")
-    return False
+    result = bq_client.query(check_query, job_config=job_config).result()
+    if result.total_rows > 0:
+        logger.info(f"[doc={document_id}] already exists in staging, skipping insert")
+        return
 
-# ------------------------
+    # Insert row
+    row = {
+        "document_id": document_id,
+        "txt": txt_name,
+        "enrich_status": status,
+        "message": message,
+        "created_at": datetime.utcnow().isoformat(),
+        "updated_at": datetime.utcnow().isoformat()
+    }
+    errors = bq_client.insert_rows_json(BQ_STAGING_TABLE, [row])
+    if errors:
+        raise RuntimeError(f"BQ staging insert failed: {errors}")
+    logger.info(f"[doc={document_id}] inserted into staging table: {status}")
+
+# =======================
 # Cloud Run handler
-# ------------------------
+# =======================
 @app.route("/", methods=["POST"])
 def handler():
     event = request.get_json(silent=True) or {}
-    bucket = None
-    record = None
-    document_id = None
-    source_pdf = None
+    record = event.get("name") or event.get("data", {}).get("name")
+    if not record or not record.startswith(TXT_PREFIX) or not record.endswith(".txt"):
+        return jsonify({"status": "ignored"}), 200
+
+    blob = storage_client.bucket(TXT_BUCKET).blob(record)
+    blob.reload()
+    metadata = blob.metadata or {}
+    document_id = metadata.get("document_id")
+    out_name = enrich_blob_name(record)
+
+    # Skip if enrichment already exists
+    if storage_client.bucket(ENRICH_BUCKET).blob(out_name).exists():
+        return jsonify({"status": "skipped"}), 200
 
     try:
-        # Event parsing
-        if "bucket" in event and "name" in event:
-            bucket = event["bucket"]
-            record = event["name"]
-        elif event.get("type") and event.get("data"):
-            bucket = event["data"].get("bucket")
-            record = event["data"].get("name")
-        elif "message" in event and "data" in event["message"]:
-            payload = json.loads(base64.b64decode(event["message"]["data"]))
-            bucket = payload.get("bucket")
-            record = payload.get("name")
+        tmp = tempfile.mkdtemp()
+        local = os.path.join(tmp, os.path.basename(record))
+        blob.download_to_filename(local)
 
-        if not bucket or not record:
-            logger.info("Ignored event with no bucket/name")
-            return jsonify({"status": "ignored"}), 200
+        with open(local, "r", encoding="utf-8") as f:
+            enriched = enrich_dutch_text(f.read())
 
-        if not record.startswith(IN_PREFIX) or not record.lower().endswith(".txt"):
-            logger.info(f"Ignored non-txt object: {record}")
-            return jsonify({"status": "ignored"}), 200
+        if upload_json_to_gcs(out_name, enriched, {**metadata, "stage":"ENRICH"}):
+            write_status_marker(record, "ENRICHED", out_name, document_id)
+            insert_staging_row(document_id, record, "SUCCESS", "enriched JSON uploaded")
 
-        blob = storage_client.bucket(bucket).blob(record)
-        blob.reload()
-        metadata = blob.metadata or {}
-        document_id = metadata.get("document_id")
-        source_pdf = metadata.get("source_pdf")
-        log_prefix = f"[doc={document_id}]" if document_id else "[doc=unknown]"
-
-        logger.info(f"{log_prefix} TXT RECEIVED: {record}")
-
-        # Download
-        with tempfile.TemporaryDirectory() as tmp:
-            local_txt = os.path.join(tmp, record.split("/")[-1])
-            blob.download_to_filename(local_txt)
-            logger.info(f"{log_prefix} TXT DOWNLOADED")
-
-            # Read and enrich
-            with open(local_txt, "r", encoding="utf-8", errors="ignore") as f:
-                text = f.read()
-            enriched = enrich_dutch_text(text)
-            logger.info(f"{log_prefix} TXT ENRICHED")
-
-            # Upload enriched JSON
-            out_name = f"{OUT_PREFIX}{record.split('/')[-1].replace('.txt', '.json')}"
-            out_blob = storage_client.bucket(bucket).blob(out_name)
-            out_blob.metadata = {
-                "document_id": document_id,
-                "source_txt": record,
-                "source_pdf": source_pdf,
-                "stage": "ENRICH",
-            }
-            out_blob.upload_from_string(
-                json.dumps({
-                    "document_id": document_id,
-                    "source_pdf": source_pdf,
-                    "source_txt": record,
-                    "bucket": bucket,
-                    "language": "nl",
-                    "generated_at": datetime.utcnow().isoformat(),
-                    "data": enriched,
-                }, indent=2, ensure_ascii=False),
-                content_type="application/json",
-            )
-            logger.info(f"{log_prefix} JSON UPLOADED TO BUCKET: {out_name}")
-
-            # Update status table
-            if document_id:
-                update_bq_status(document_id, "SUCCESS", "enrich completed")
-
-        return jsonify({"status": "ok", "document_id": document_id}), 200
+        return jsonify({"status": "ok"}), 200
 
     except Exception as e:
-        logger.exception(f"{log_prefix} ENRICH FAILED")
-        if document_id:
-            update_bq_status(document_id, "FAILED", str(e))
-        return jsonify({"status": "error"}), 200
+        write_status_marker(record, "FAILED", str(e), document_id)
+        try:
+            insert_staging_row(document_id, record, "FAILED", str(e))
+        except Exception as bq_err:
+            logger.exception(f"[doc={document_id}] Failed to insert FAILED row: {bq_err}")
+        return jsonify({"status": "failed"}), 200
+
+# =======================
+# Local run
+# =======================
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

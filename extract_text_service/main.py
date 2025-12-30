@@ -9,6 +9,7 @@ from datetime import datetime
 from flask import Flask, request, jsonify
 from google.cloud import storage, bigquery
 from pypdf import PdfReader
+from google.api_core.exceptions import PreconditionFailed
 
 # -----------------------
 # App + logging
@@ -20,13 +21,13 @@ logger = logging.getLogger("extract")
 # -----------------------
 # Config
 # -----------------------
-RAW_BUCKET = os.environ.get("RAW_BUCKET", "poc_binod_nl_pdfs")        # raw PDFs
-EXTRACTED_BUCKET = os.environ.get("EXTRACTED_BUCKET", "poc_extracted") # extracted text
-STATUS_BUCKET = os.environ.get("STATUS_BUCKET", "poc_status")          # status JSONs
+RAW_BUCKET = os.environ.get("RAW_BUCKET", "poc_binod_nl_pdfs")
+EXTRACTED_BUCKET = os.environ.get("EXTRACTED_BUCKET", "poc_extracted")
+STATUS_BUCKET = os.environ.get("STATUS_BUCKET", "poc_status")
 
 RAW_PREFIX = "raw/"
 OUT_PREFIX = "extracted/"
-STATUS_PREFIX = "status/"  # status JSONs
+STATUS_PREFIX = "status/"
 
 BQ_TABLE_ID = "houzr-280014.poc_binod.document_pipeline_status"
 
@@ -73,18 +74,32 @@ def extract_pdf_to_text(local_path):
             texts.append(txt)
     return "\n\n".join(texts)
 
-def insert_extract_status(document_id, pdf_name, status, message=""):
+# -----------------------
+# Race-safe BigQuery insert
+# -----------------------
+def insert_extract_status_safe(document_id, pdf_name, status, message=""):
+    """Insert row if document_id not exists, otherwise skip"""
+    check_query = f"""
+    SELECT 1 FROM `{BQ_TABLE_ID}`
+    WHERE document_id = @document_id
+    LIMIT 1
     """
-    Directly insert a row into the main BigQuery table.
-    """
-    query = f"""
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[bigquery.ScalarQueryParameter("document_id", "STRING", document_id)]
+    )
+
+    result = bq_client.query(check_query, job_config=job_config).result()
+    if result.total_rows > 0:
+        logger.info(f"[doc={document_id}] BQ row already exists, skipping INSERT")
+        return False
+
+    insert_query = f"""
     INSERT INTO `{BQ_TABLE_ID}` 
     (document_id, pdf_name, extracted_status, enrich_status, bq_inserted_status,
      extracted_retries, enrich_retries, bq_insert_retries, message, created_at, updated_at)
     VALUES (@document_id, @pdf_name, @status, "PENDING", "PENDING", 0, 0, 0, @message, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())
     """
-
-    job_config = bigquery.QueryJobConfig(
+    insert_job_config = bigquery.QueryJobConfig(
         query_parameters=[
             bigquery.ScalarQueryParameter("document_id", "STRING", document_id),
             bigquery.ScalarQueryParameter("pdf_name", "STRING", pdf_name),
@@ -93,16 +108,24 @@ def insert_extract_status(document_id, pdf_name, status, message=""):
         ]
     )
 
-    bq_client.query(query, job_config=job_config).result()
+    bq_client.query(insert_query, job_config=insert_job_config).result()
+    logger.info(f"[doc={document_id}] BQ INSERT SUCCESS")
+    return True
 
+# -----------------------
+# Download / Upload
+# -----------------------
 def download_blob_to_file(bucket_name, blob_name, file_path):
-    blob = storage_client.bucket(bucket_name).blob(blob_name)
-    blob.download_to_filename(file_path)
+    storage_client.bucket(bucket_name).blob(blob_name).download_to_filename(file_path)
 
 def upload_text_to_gcs(blob_name, text, metadata=None):
     blob = storage_client.bucket(EXTRACTED_BUCKET).blob(blob_name)
     blob.metadata = metadata or {}
-    blob.upload_from_string(text, content_type="text/plain")
+    try:
+        blob.upload_from_string(text, content_type="text/plain", if_generation_match=0)
+        return True
+    except PreconditionFailed:
+        return False
 
 # -----------------------
 # Cloud Run Handler
@@ -114,7 +137,7 @@ def handler():
     record = None
     generation = event.get("generation")
 
-    # Parse GCS / PubSub events
+    # Parse event
     if "bucket" in event and "name" in event:
         bucket = event["bucket"]
         record = event["name"]
@@ -148,7 +171,6 @@ def handler():
     logger.info(f"{log_prefix} PDF RECEIVED")
 
     if has_been_extracted(record) or has_terminal_marker(record):
-        write_status_marker(record, "SKIPPED", "already extracted", document_id)
         logger.info(f"{log_prefix} PDF SKIPPED (already extracted)")
         return jsonify({"status": "skipped", "document_id": document_id}), 200
 
@@ -165,7 +187,7 @@ def handler():
             if f.read(5) != b"%PDF-":
                 logger.warning(f"{log_prefix} INVALID PDF")
                 write_status_marker(record, "INVALID_PDF", document_id=document_id)
-                insert_extract_status(document_id, record, "FAILED", "invalid pdf")
+                insert_extract_status_safe(document_id, record, "FAILED", "invalid pdf")
                 return jsonify({"status": "ignored"}), 200
 
         logger.info(f"{log_prefix} PDF VALIDATED")
@@ -174,7 +196,7 @@ def handler():
         logger.info(f"{log_prefix} PDF CONVERTED TO TEXT")
 
         out_name = out_txt_name(pdf_file)
-        upload_text_to_gcs(
+        uploaded = upload_text_to_gcs(
             out_name,
             text,
             metadata={
@@ -183,20 +205,19 @@ def handler():
                 "stage": "EXTRACT",
             },
         )
-        logger.info(f"{log_prefix} TXT UPLOADED TO BUCKET: {out_name}")
 
-        write_status_marker(record, "EXTRACTED", out_name, document_id)
-        logger.info(f"{log_prefix} STATUS MARKER UPDATED")
-
-        insert_extract_status(document_id, record, "SUCCESS", "text extracted")
-        logger.info(f"{log_prefix} STATUS TABLE UPDATED")
+        if uploaded:
+            write_status_marker(record, "EXTRACTED", out_name, document_id)
+            logger.info(f"{log_prefix} TXT UPLOADED TO BUCKET: {out_name}")
+            logger.info(f"{log_prefix} STATUS MARKER UPDATED")
+            insert_extract_status_safe(document_id, record, "SUCCESS", "text extracted")
+        else:
+            logger.info(f"{log_prefix} TXT SKIPPED (race condition detected, no BQ insert)")
 
         return jsonify({"status": "ok", "document_id": document_id, "output": out_name}), 200
 
     except Exception:
         logger.exception(f"{log_prefix} DOCUMENT EXTRACT FAILED")
         write_status_marker(record, "FAILED", "exception", document_id)
-        logger.info(f"{log_prefix} STATUS MARKER UPDATED TO FAILED")
-        insert_extract_status(document_id, record, "FAILED", "exception during extract")
-        logger.info(f"{log_prefix} STATUS TABLE UPDATED TO FAILED")
+        insert_extract_status_safe(document_id, record, "FAILED", "exception during extract")
         return jsonify({"status": "failed", "document_id": document_id}), 200
