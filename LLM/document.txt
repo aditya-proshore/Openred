@@ -1,0 +1,930 @@
+(ontwerp) 
+Begrotingswijziging 
+2024-1 
+
+ 
+  
+ 
+INHOUDSOPGAVE  
+ 
+VOORWOORD  ................................ ................................ ................................ .... 2 
+1. INLEIDING  ................................ ................................ ................................  3 
+2. ELEMENTEN (ontwerp)BEGROTINGSWIJZIGING  2024 -1 ................................ .... 4 
+2.1 Toelichting  ................................ ................................ ..............................  4 
+2.1.1  Covid -19 ................................ ................................ .........................  4 
+2.1.2  Versterking infectieziektebestrijding en pandemische paraatheid (VIP)  ....... 4 
+2.1.3  Loonindex  ................................ ................................ ........................  5 
+2.1.4  Prijsindex ................................ ................................ .........................  5 
+2.1.5  Maternale Kinkhoest vaccinatie (MKV)  ................................ ...................  6 
+2.1.6  Forensische Geneeskunde  ................................ ................................ ... 6 
+2.1.7  Volumemutatie (maatwerk) -taken  ................................ ........................  6 
+2.1.8  Ontheemden OekraÃ¯ne  ................................ ................................ ....... 7 
+2.2 Financieel overzicht  ................................ ................................ ..................  7 
+2.3 (ontwerp)Begrotingswijziging 2024 -1 ................................ ...........................  9 
+3. FINANCIÃ‹LE VERTALING  ................................ ................................ ............  10 
+3.1 Bijgestelde (ontwerp)begroting 2024 -1 ................................ ......................  10 
+3.2 Ontwikkeling bijdrage per Inwoner/Kind  ................................ .....................  11 
+3.3 Overzicht reserves en voorzieningen  ................................ ..........................  11 
+3.3.1  Toelichting mutaties reserves  ................................ ............................  12 
+3.3.2  Voorzieningen  ................................ ................................ .................  13 
+3.3.3  Toelichting mutaties voorzieningen  ................................ .....................  13 
+3.4 Overzicht investeringen  ................................ ................................ ...........  14 
+3.5 Bijdrage per gemeente  ................................ ................................ ............  15 
+4. VASTSTELLING  ................................ ................................ .........................  16 
+Bijlage 1. Structurele en incidentele effecten op begrotingswijziging  .........................  17 
+Bijlage 2. Baten en lasten per taakveld  ................................ ................................  18 
+Bijlage 3. Geprognosticeerde balans en kengetallen  ................................ ...............  19 
+ 
+ 
+ 
+ 
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    2 
+ VOORWOORD  
+ 
+ 
+Hierbij  bieden w ij u de (ontwerp) begroting swijziging  2024-1 van GGD regio Utrecht  (hierna 
+GGDrU)  aan. 
+  
+In de GGDrU -begroting 2024â€“0 hebben w ij reeds uitgangspunten voor de  begroting  van 
+dit boekjaar  benoemd. Deze gelden ook voor  deze begroting swijziging . Daarbij sluiten wij 
+aan op  de door het Algemeen B estuur (hierna: AB) genomen besl uiten (vaststelling 
+kader brief 2024 door AB op 29 maart  2023, begroting 20 24-0 op 5 juli 2023) ten aanzien 
+van loon- en prijs indexering .  
+ 
+Deze wijziging is zodanig van aard dat er sprake is van een aanpassing op de inwoner - en 
+kindbijdrage. Overeenkomstig de wettelijke eisen en de afspraken in onze  
+gemeenschappelijke regeling van GGDrU leggen wij deze begrotingswijziging, vanwege de 
+wijziging op de inwoner - en kindbijdrage, voor zienswijze voor aan de raden van de 
+deelnemende gemeenten.  De begrotingswijziging  2024-1 dient door de leden van het AB 
+te worden vastgesteld.  
+ 
+Voor iedere gemeente hebben wij een bijgesteld gemeenteblad bij gevoegd .  
+ 
+ 
+ 
+Mevrouw A.M.A. Pennarts -Pouw     Dr. Marc Sprenger    
+Lid Dagelijks Bestuur GGDrU,    Directeur Publieke Gezondheid  
+Portefeuillehouder financiÃ«n    Secretaris van het bestuur  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    3 
+ 1. INLEIDING  
+ 
+ 
+In het najaar van  2022 bracht  GGDrU conform de vereisten in de Wet gemeenschappelijke 
+regelingen (Wgr) de kaderbrief voor het begrotingsjaar 2024 uit. Hierin zijn de 
+uitgangsp unten voor de begroting van 2024 geformuleerd. Deze kaderbrief legde het 
+dagelijks bestuur  (hierna: DB)  voor zienswijze  voor aan de gemeenteraden. Na bespreking 
+van de uitgebrachte zienswijzen in de vergadering het AB van 29 maart  2023 stelde het 
+bestuur de kaderbrief 202 4 vast. Op basis van de  kaderbrief 2024 stelde het AB de 
+begroting 20 24-0 vast in de vergadering  van 5 juli 2023.  
+ 
+In deze (ontwerp)begrotingswijziging 2024-1 is in h oofdstuk 2  uiteen gezet wat de  
+belangrijkste wijzigingen op de begroting swijziging  2024-0 zijn. De grootste  mutatie in de  
+voorliggende  (ontwerp) begrotingswijziging 2024-1 betreft de impact van de Versterking  
+infectieziektebestrijding pandemische paraatheid  (VIP) & Covid -19, deze lichten we toe in 
+de paragrafen  Â§ 2.1.1 t/m Â§ 2.1.2.  
+ 
+Op 14 december  2023 jl. is een nieuwe Cao overeengekomen voor de periode van 1 januari 
+2024 tot en met 31 maart 2025 . De wijzigingen die hieruit voortvloeien voor het jaar 2024 
+zijn verwerkt in deze (ontwerp) begrotingswijziging. Verder verwerken we  in 
+overeenstemming met  de kaderbrief 202 4 in deze wijziging de mutatie in de 
+werkgeverslasten  voortkomend  uit de bijstelling van de sociale verzekeringspremie s. Deze 
+lichten we toe in paragraaf Â§ 2.1.3 en Â§ 2.1.4. 
+ 
+In de septembercirculaire 2023 is ge communiceerd dat de maternale kinkhoestvaccinatie  
+(MKV)  toegevoegd gaat worden aan het Rijksvaccinatieprogramma (RVP)  per 2024. Deze 
+toevoeging heeft effect op de hoogte van kindbijdrage . Het financiÃ«le effect hiervan lichten 
+we toe in paragraaf Â§ 2.1.5.  
+ 
+Bij forensische zorg heeft het AB  op 1 november 2023 besloten tot de vorming van Ã©Ã©n 
+centrum -GGD forensische geneeskunde Midden -Nederland. Dit betreft een samenvoeging 
+van de FG in de politieregio Midden -Nederland (GGD regio Utrecht, GGD Gooi & 
+Vechtstreek, GGD Flevoland) . De financiÃ«le  effecten  hiervan lichten we toe in paragraaf Â§ 
+2.1.6.  
+ 
+Enkele begrotingsposten actualiseerden wij in deze begrotingswijzing , zodat deze  meer in 
+lijn zijn met de verwachte realisatie over 20 24 (op basis van de meest recente informatie ). 
+Dit zijn taken waarvan in de loop van 202 4 afspraken veranderden  of concreet werden. 
+Deze komen in de paragr aaf Â§ 2.1.7 aan bod.   
+ 
+We sluiten hoofdstuk 2 af met een samenvattend financieel overzicht in paragraaf Â§ 2.2 
+waarin wij ook de financieringsbron van ieder taak hebben opgenomen. Deze tabel laat 
+zien waar deze wijzigingen gevolgen hebben voor financiering door gemeenten en waar 
+andere partijen, zoals Rijk en RIVM, aan de lat staan.   
+ 
+In hoofdstuk 3  treft u de financiÃ«le  uitwerking  van de wijzigingen  op de begroting 202 4-0. 
+Dit resulteert in de bijgestelde (ontwerp) begroting 2024-1. In de bijlage is de bijgestelde 
+(ontwerp) begroting vertaald naar de uniforme taakvelden alsmede de geprognosticeerde 
+balans en kengetallen.  
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    4 
+ 2. ELEMENTEN (ontwerp) BEGROTINGSWIJZIGING   
+2024-1 
+ 
+2.1 Toelichting  
+ 
+Over het geheel kunnen we stellen dat d e omvang van de (ontwerp) begroting 2024-1 met 
+circa 28,5 miljoen euro is toegenomen te n opzichte van de begroting 20 24-0. Dit is voor 
+twee derde  toe te wijzen aan de gevolgen van Covid -19 en de VIP -regeling . 
+2.1.1  Covid -19 
+In de periode 2020 -2022 heeft GGDrU een enorme inspanning geleverd in de 
+pandem iebestrijding. Inmiddels is de situatie zodanig dat Covid -19 niet meer als 
+pandemische maar als een endemische ziekte te kwalificeren is . Het ministerie van VWS 
+heeft tegen die achtergrond besloten dat er geen juridische basis meer is om de bestaande 
+Covid -19-meerkostenregeling te handhaven.  In plaats van de meerkostenregeling draagt  
+het VWS via een tweetal SPUK -regelingen  zorg voor de financiering van de 
+basisinfrastructuur en de najaarscampagne die tot uitvoering komt in de tweede helft van 
+2024.  Voor de instandhouding van de basisinfrastructuur he eft VWS een uitk ering 
+toegekend van maximaal â‚¬ 1.135.000. Voor de uitvoering van de najaarscampagne 
+(periode juli t/m december 202 4) heeft GGDrU heeft een uitkering toegekend gekregen 
+van maximaal â‚¬ 5.817.000. 
+2.1.2  Versterking infectieziektebestrijding en pandemische paraat heid (VIP)  
+De afgelopen jaren werd de wereld en zo ook Nederland geconfronteerd met een pandemie 
+die een ongekende impact heeft. Het is niet zonder reden dat het nieuwe kabinet het 
+vergroten van de pandemische paraatheid tot Ã©Ã©n van haar speerpunten in het 
+regeerakkoord heeft gemaakt,  omdat men ervan is doordrongen dat Nederland beter 
+voorbereid dient te zijn op een volgende pandemie. Daarvoor is onder meer nodig dat er 
+geÃ¯nvesteerd wordt in de infectieziektebestrijding. Tijdens de pandemie is gebleken dat  er 
+alleen k an worden opgeschaald en een infectieziekte -uitbraak alleen effectief  bestreden 
+kan worden als de basis op orde is.  Hiervoor is het traject Versterking 
+infectieziektebestrijding en pandemische paraatheid GGDâ€™en opgezet met vijf belangrijke 
+pijlers waarin concrete activiteiten zijn bepaald om in de toekomst klaar te kunnen staan 
+voor komende pandemie. De vijf pijler s zijn:  
+1. Kwetsbaarheden wegnemen voor pandemische paraatheid  
+2. Versterken boven(regionale) monitoring en surveillance  
+3. Versterken van de wetenschappelijke kennisinfrastructuur infectieziektebestrijding  
+4. Samenwerken op bovenregionaal niveau  
+5. Slim Ã©n versneld opleiden  
+ 
+Het VWS heeft hiervoor een SPUK -regeling gemaakt voor 2023 en 2024 om de activiteiten 
+vanuit de vijf pijlers te kunnen uitvoeren. Voor GGDrU betekent dit concreet dat wij voor 
+2024 een uitkering ontvangen van â‚¬ 11. 007.245 voor de uitvoering hiervan. Dit bedrag is 
+voor uitvoering van activiteiten binnen GGDrU alsmede ter dekking van  kosten vanuit die 
+ten behoeve van dit programma worden gemaakt door GGDGHOR  NL en de overige 
+GGDâ€™en.  
+ 
+Aanvullend op de regeling is dat door het VWS een extra pijler is toegevoegd voor de 
+periode van 20 24-2026, namelijk â€˜ Pijler 6: Het inzetten van transitiecapaciteitâ€™.  Hiervoor 
+heeft GGDrU een extra uitkering ontvangen van â‚¬  420.142.  
+ 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    5 
+ 2.1.3  Loonindex  
+Naar aanleiding van de kaderbrief 2020 verzochten  gemeenteraden in het vervolg in de 
+initiÃ«le begroting reeds rekening te houden met een re Ã«le prijsstijging en loonontwikkeling.  
+Het be stuur van GGDrU heeft  afgesproken voor de indexeringen een concreet percentage 
+op te nemen. Overeenkomstig de uitgangspunten van de kaderbrief wordt daarbij 
+uitgegaan van de meest recente gegevens. Per definitie wijkt daarmee de uiteindelijke 
+uitwerking af van de eerdere schatting omdat er later in de tijd meer informatie 
+beschikbaar is.  
+ 
+Op 14 december  2023 jl. is een nieuwe cao overeengekomen voor het jaar 202 3. In deze 
+(ontwerp) begrotingswijziging hebben we de financiÃ«le  afspraken  uit de cao verwerkt.  In 
+de cao wordt uitgegaan van een stijging van het salaris van 4,75% per 1 januari 2024 en 
+vervolgens 1,25% per 1 oktober 2024. Het effect van de cao-stijging  op de begroting is  
+ca. â‚¬ 1.042.000. 
+ 
+Naast bovengenoemde ontwikkeling is ook de mutatie in de werkgeverspremies van 
+invloed op de loonindexatie. De socia le verzekeringspremies zijn gestegen  en de premie s 
+voor het ouderdoms - en nabestaandenpensioen zijn gedaald  (werkgeversdeel) ; in absolute 
+zin stijgen de werkgeverspremies  beperkt met ca. â‚¬ 100.000 . Onderstaande tabel maakt 
+inzichtelijk welke bijstellingen  zijn gedaan .  
+ 
+Premie - en 
+franchises  2024-1 2024-0 
+WHK  1,05%  0,92%  
+Wia basis  8,04%  7,61%  
+UFO  0,68%  0,68%  
+ZVW  6,57%  6,68%  
+Totaal SV-premies  16,34%  15,89%  
+   
+OP/NP franchise  17.550        16.350  
+OP/NP en IVP % WG  18,90%  19,53%  
+IVP % WG  0,00%  0,00%  
+Franchise AOP  26.800  25.050  
+AOP % WG  0,49%  0,49%  
+IKB 17,45%  17,45%  
+ 
+De (ontwerp) begroting 2024-1 wordt door bovenstaande wijzigingen met ca. â‚¬ 1.142.000 
+naar boven  bijgesteld . Deze bijstelling heeft effect op de inwoner - en kindbijdrage  (IWB 
+en KB).  
+2.1.4  Prijsindex  
+In de kaderbrief  2024 stelde n we vast dat GGDrU bij het opstellen van de begroting en 
+wijzigingen van de begroting steeds uitgaat van de op dat moment  meest actuele  
+beschikbare indexering . Voor deze (ontwerp) begrotingswijz iging is dat de Meicirculaire  
+2024 gepubliceerd op 27 mei 202 4. In begroting 202 4-0 hanteerden  we 2,5% als 
+prijsindex  voor het jaar 202 4. Dit op basis van de septembercirculaire 20 22. In deze 
+(ontwerp) begrotingswijziging 2024-1 hanteren we , conform de meicirculaire 20 24, een 
+prijsindex van 4,0% voor het jaar 202 4. Zie hiervoor tabel 4.2.2 op bladzijde 42 van de 
+meicirculaire gemeentefonds 2024.  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    6 
+  
+ 
+De correctie van de prijsindex 4,0%-2,5%=1,5% (ca. â‚¬  247.000) hebben  we verwerkt in 
+deze begroting swijziging . 
+2.1.5  Maternale Kinkhoest vaccinatie (MKV)  
+Vanaf december 2019 krijgen zwangere vrouwen maternale kinkhoestvaccinatie 
+aangeboden door de Rijksoverheid. De vergoeding hiervan verliep via het RIVM. Vanaf 1 
+januari 2024 wordt de uitvoering van deze maternale kinkhoestvaccinatie formeel 
+overgedragen aa n de gemeenten. De maternale kinkhoestvaccinatie wordt opgenomen in 
+het Rijksvaccinatieprogramma (RVP) zoals genoemd in artikel 11, tweede lid, in het Besluit 
+publieke gezondheid. De financiÃ«le middelen voor de uitvoering van de maternale 
+kinkhoestvaccinat ie worden aan het gemeentefonds toegevoegd aan het cluster Sociale 
+basisvoorzieningen. GGDrU heeft met de beschikbare informatie uit de septembercirculaire 
+2023 berekend dat de 25 gemeenten samen circa â‚¬ 229.000 euro ontvangen vanuit het 
+gemeentefonds voor de MKV. Dit betekent dat voor de maternale kinkhoestvaccinatie  de 
+kindbijdrage vanaf 1 januari 2024 met gemiddeld  â‚¬ 1,097 stijgt per kind voor alle 25 
+gemeenten.  
+2.1.6  Forensische Geneeskunde  
+Bij forensische zorg heeft het AB  op 1 november 2023 besloten tot de vorming van Ã©Ã©n 
+centrum -GGD forensische geneeskunde Midden -Nederland. Bij het aangaan van de 
+samenwerking is als doel gesteld om per 1 januari 2024 over te  gaan tot een volledige 
+harmonisatie van de FG in de politieregio Midden -Nederland (GGD regio Utrecht, GGD Gooi 
+& Vechtstreek, GGD Flevoland) waarbij er Ã©Ã©n Centrum -GGD voor FG wordt gerealiseerd  
+en de uitvoering hiervan ligt bij GGDrU.  Het financiÃ«le  effect door de schaalvergroting is 
+voor GGDrU ca. â‚¬ 1.215.000 aan stru cturele inkomsten  en uitgaven , dit is inclusief de 
+toenemende  trend die we afgelopen jaren zien in het aantal uit te voeren verrichtingen . 
+Daarnaa st is via het Rijk een subsidie beschikt aan de GGD -GHOR t.b.v. de implementatie 
+en versterking van de FG -regio. Hier kunnen wij voor het deel van de regio midden 
+Nederland aanspraak op maken tot een maximaal bedrag van â‚¬ 622.000 . 
+2.1.7  Volumemutatie (maatwerk) -taken  
+Het resterende verschil tussen de (ontwerp) begroting swijziging 2024-1 en begroting 
+2024-0 is het totaal van volumemutaties in met name maatwerktaken  en overige 
+projecten.   
+ 
+Bij het maatwerk projecten vanuit de gemeenten zien we voornamelijk veel projecten  
+voortkomend vanuit de IZA  & GALA gelden. Dit zijn onder mee r de projecten als de 
+regionale ketenaanpakken, Kennis en adviesfunctie , kansrijke start.  Daarnaast ook vanuit 
+volume mutaties bij Meld- en adviespunt Bezorgd  (MAB)  en extra inzet op de 
+ziekteverzuimbegeleiding bij de JGZ via de MAZL trajecten.  Totaal is dit effect op de 
+begroting  ca. â‚¬ 3.5 miljoen . Naast gemeentelijk maatwerk is er ook sprake van maatwerk 
+gefinancier d door derden als GGDGHOR, RIVM , VWS , en ZonMW. De totale mutatie vanuit 
+derden als gevolg van nieuwe maatwerktaken op de (ontwerp)begroting 202 4 bedraagt 
+afgerond â‚¬ 3,1 miljoen.  
+
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    7 
+ 2.1.8  Ontheemden OekraÃ¯ne  
+Vanaf februari 2022 is door het oorlogsgeweld in OekraÃ¯ne een stroom van ontheemden 
+ontstaan. De verrichte werkzaamheden en gemaakte kosten die GGDrU voor deze groep 
+maakt, welke niet in aanmerking komen voor een vergoeding op grond van de Wet 
+publieke gez ondheid worden vergoed via een tweetal financiÃ«le regelingen.  
+ 
+De eerste regeling heeft betrekking op de dienstverlening door GGDrU op het gebied van 
+de regierol en coÃ¶rdinatie, medische psychosociale zorg, inspecties technische hygiÃ«nische 
+zorg, organiseren meldpunt infectiezieken en uitvoering (medische) intake. De kosten die 
+hiermee gemoeid zijn (circa â‚¬ 80.000) declareert GGDrU bij d e provincie Utrecht . 
+ 
+De tweede regeling is van het ministerie van VWS  en betreft de vergoeding van 
+jeugdgezondheidskosten die gemaakt worden voor de zorg aan OekraÃ¯ense 
+vluchtelingenkinderen. Het gaat over e en intake, medisch onderzoek en contactmomenten 
+(op indicatie). Het is de verwachting dat de gemeenten via de decembercirculaire 2024 
+gecompenseerd zullen worden via een ophoging van het gemeentefonds  (gelijk aan de 
+systematiek van de afgelopen twee  jaar). Er zal waarschijnlijk weer gewerkt gaan worden 
+met een normbedrag per kind. GGDrU zal  een declaratie indienen bij de JGZ-gemeenten 
+voor de gemaakte kosten voor deze doelgroep  (ingeschat op â‚¬ 142.000) , gebaseerd op 
+het normbedrag en het aantal OekraÃ¯ense k inderen in zorg.   
+ 
+2.2 Financieel overzicht  
+ 
+In onderstaande tabel zijn de financiÃ«le  wijzigingen  opgenomen die zijn verwerkt in de 
+(ontwerp) begrotingswijziging  exclusief mutaties in reserves  (deze worden in Â§ 3.3 
+toegelicht ). Per onderdeel  wordt weergegeven  waar deze wijzigingen gevolgen hebben 
+voor financiering door gemeenten en waar andere partijen, zoals Provincie  en RIVM . Ook 
+is aangegeven of  de wijziging incidenteel (I) of structureel (S) van aard is.  
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    8 
+  
+ 
+(ontwerp)Begrotingswijziging 2024 -1 Bedrag  I/S Financiering  Indeling  
+Covid -19 Vaccinatiecampagne 2024  6.952.000  I VWS  Rijk 
+Versterking infectieziektebestrijding en pandemische 
+paraatheid (VIP)  11.427.400  I VWS  Rijk 
+Loonindex  1.142.000  S Gemeenten  Gemeenten  
+Prijsindex  247.000  S Gemeenten  Gemeenten  
+Maternale Kinkhoest in Rijksvaccinatieprogramma 
+(via KB)  229.000  S Gemeenten  Gemeenten  
+Forensische zorg (verrichtingen)  1.215.000  S Gemeenten/Politie  Gemeenten / Rijk  
+Forensische zorg (subsidies implementatie FG -regio)  622.000  I GGD -GHOR  Rijk 
+Ziekteverzuim begeleiding in het voortgezet 
+onderwijs, MAZL  757.700  I Gemeenten  Gemeenten  
+Rente Baten  550.000  I Derden  Derden  
+Maatwerkprojecten GB ( o.a. Rookvrij, PGC, 
+Kansrijke start, B.slim)  548.000  I Gemeenten  Gemeenten  
+Detacheringen  468.650  I Gemeenten / Derden  Gemeenten / Derden  
+Regionale ketenaanpakken: Valpreventie, GLI, 
+Kansrijke start (IZA / GALA)  464.700  I Gemeenten  Gemeenten  
+CB-locaties  427.250  S Gemeenten  Gemeenten  
+ZonMW subsidies (SOMO,GLIA, Bouwen aan een 
+gezonde gemeenschap)  411.000  I ZonMW  Rijk 
+Publieke gezondheid asielzoekers  399.000  I GGD -GHOR  Rijk 
+Meld - en Adviespunt Bezorgd  359.800  I Gemeenten  Gemeenten  
+Aanvullende Seksuele gezondheidszorg: SOA en PrEP 
+zorg  319.750  I VWS  Rijk 
+HPV -vaccinatie jongvolwassenen (18 -26 jarigen) & 
+inhaal <18 jaar  285.000  I RIVM  Rijk 
+Seksuele gezondheid (o.a. schools out en transkliniek 
+Utrecht)  277.950  I Gemeenten / Derden  Gemeenten  
+Omzetstijging Reisadvies  255.000  I Klanten (PxQ)  Klanten  
+Rookvrij leven  238.550  I GGD -GHOR  Rijk 
+Ontheemden OekraÃ¯ne  222.000  I Provincie / Gemeenten  Rijk / Gemeenten  
+VVE 178.400  I Gemeenten  Gemeenten  
+Kennis en adviesfunctie  164.800  I Gemeenten  Gemeenten  
+Stevig ouderschap  157.400  I Gemeenten  Gemeenten  
+Subsidie Maatwerk duurzame inzetbaarheid (MDIEU)  150.000  I SZW  Rijk 
+Totaal  28.545.000        
+ 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    9 
+ 2.3 (ontwerp) Begrotingswijziging 2024 -1 
+ 
+De GGDrU kent Ã©Ã©n begrotings programma : Publieke Gezondheid. Het programma is 
+opgebouwd aan de hand van de pijlers  uit de bestuursagenda 20 23-2027. De financiÃ«le  
+wijzigingen uit voorgaande tabel leiden tot de volgende (ontwerp) begrotingswijziging 
+2024-1. Onderstaand wordt eerst het overzicht van baten en lasten gepresenteerd en 
+daarna de uitsplitsing naar de diverse pijlers . 
+ 
+Programma  (ontwerp) Begrotingswijziging 2024 -1 
+(x â‚¬ 1.000)   Baten    Lasten    Saldo  
+Publieke Gezondheid  28.545  29.528  -983 
+ - - - 
+Geraamde totaal saldo van baten en lasten  28.545  29.528  -983 
+Mutaties reserves  983 - 983 
+Geraamd resultaat  29.528  29.528  - 
+ 
+De (ontwerp) begroting swijziging  uitgesplitst naar pijlers  geeft het volgende beeld:  
+ 
+Programma Publieke Gezondheid  (ontwerp) Begrotingswijziging 2024 -1 
+(x â‚¬ 1.000)   Baten    Lasten    Saldo  
+Gezonde en veilige leefomgeving  255 19.229  -18.974  
+Kansrijk opgroeien  - 4.166  -4.166  
+Langer gezond zelfstandig  - 2.111  -2.111  
+Algemene dekkingsmiddelen  28.290  - 28.290  
+Overhead  - 4.018  -4.018  
+Onvoorzien  - 4 -4 
+Geraamde totaal saldo van baten en lasten  28.545  29.528  -983 
+Mutaties reserves  983 - 983 
+Geraamd resultaat  29.528  29.528  - 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    10 
+ 3. FINANCIÃ‹LE  VERTALING  
+ 
+ 
+3.1 Bijgestelde  (ontwerp) begroting 202 4-1 
+ 
+In de volgende tabel staat het overzicht van de bijgestelde (ontwerp) begroting  van het 
+programma Publieke gezondheid.  De wijzigingen in deze (ontwerp) begroting zijn deels 
+structureel en deels incidenteel van aard, zoals aangegeven in de tabel in Â§ 2.2 . De BBV-
+richtlijnen  schrijven voor dat deze structurele en incidentele wijzigingen inzichtelijk worden 
+gemaakt. Wij hebben hiervoor in bijlage 1 een tabel opgenomen met de wijzigingen die 
+structureel dan wel een incidenteel effect hebben op de (ontwerp) begroti ng. De structurele 
+effecten werken ook door in  de begrotings wijziging 2025-1 en begroting 202 6. Tevens is 
+voorgeschreven dat voor de uitvoeringsinformatie in de begroting gebruik wordt gemaakt 
+van de bij ministeriÃ«le regeling vastgestelde taakvelden. Dit overzicht is in bijlage 2 
+opgenomen.  
+ 
+Programma  Begroting 202 4-0 Bijgestelde 
+(ontwerp) begroting  2024 -1 
+(x â‚¬ 1.000)  Baten  Lasten  Saldo  Baten  Lasten  Saldo  
+Publieke Gezondheid  56.998  57.699  -701 85.543  87.227  -1.684  
+       
+Geraamde totaal saldo van baten en lasten  56.998  57.699  -701 85.543  87.227  -1.684  
+Mutaties reserves  741 40 701 1.724  40 1.684  
+Geraamd resultaat  57.739  57.739  - 87.267  87.267  - 
+ 
+De bijgestelde begroting uitgesplitst naar de pijlers uit de bestuursagenda  staat in de 
+volgende tabel.  
+ 
+Programma Publieke Gezondheid  Begroting 202 4-0 Bijgestelde 
+(ontwerp) begroting  2024 -1 
+(x â‚¬ 1.000)  Baten  Lasten  Saldo  Baten  Lasten  Saldo  
+Gezonde en veilige leefomgeving  2.100  11.821  -9.721  2.355  31.050  -28.695  
+Kansrijk opgroeien  - 27.247  -27.247  - 31.413  -31.413  
+Langer gezond zelfstandig  - 4.194  -4.194  - 6.305  -6.305  
+Algemene dekkingsmiddelen  54.898  - 54.898  83.188  - 83.188  
+Overhead  - 14.315  -14.315  - 18.333  -18.333  
+Onvoorzien  - 122 -122 - 126 -126 
+Geraamde totaal saldo van baten en lasten  56.998  57.699  -701 85.543  87.227  -1.684  
+Mutaties reserves  741 40 701 1.724  40 1.684  
+Geraamd resultaat  57.739  57.739  - 87.267  87.267  - 
+ 
+ 
+ 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    11 
+ 3.2 Ontwikkeling  bijdrage per Inwoner /Kind  
+ 
+In paragra fen Â§ 2.1.3 t/m Â§ 2.1.5 is toelichting gegeven op de ontwikkeling van loonkosten 
+en prijzen  en ophoging vanuit de MKV . De w ijzigingen hierin hebben gevolgen voor de 
+inwoner - en kindbijdrage. De wijziging van de inwonerbijdrage en de kindbijdrage  ten 
+opzichte van de begroting 202 4-0, zoals de onderstaande  tabel laat zien, wordt verklaard 
+door de effecten van de wijzigingen in sociale verzekeringspremies en pensioenpremies  en 
+door de toepassing de effecten uit de vastgestelde cao.  
+ 
+ 
+Gemeente  IWB  
+2024-0 Loon  
+index  Prijs  
+index  IWB  
+2024 -1 
+MN-gemeenten (m.u.v. Eemnes)  â‚¬ 7,230  0,145 0,031 â‚¬  7,406 
+Gemeente Eemnes  â‚¬ 6,927  0,139 0,030 â‚¬  7,096 
+Gemeente Utrecht * â‚¬ 5,009  0,100 0,022 â‚¬  5,131 
+* Bedrag is exclusief de bijdragen voor Epidemiologie en Gezondheidsbevordering (lump sum bedragen ) 
+ 
+ 
+Gemeente  KB 
+2024-0 Loon  
+index  Prijs  
+index  MKV  KB 
+2024 -1 
+MN-gemeenten  â‚¬ 151,041 3,026 0,654 1,097  â‚¬ 155,818  
+ 
+ 
+3.3 Overzicht reserves en voorziening en 
+ 
+In deze paragraaf gaan we in op de opgebouwde reserves en voorzieningen per 1 januari 
+2024. De onderstaande tabel geeft het verwachte verloop van reserves en voorzieningen 
+weer en de verwachte eindstand per 31 december 202 4. 
+ 
+Reserves  
+(x â‚¬ 1.000)  Saldo  
+01-01-2024 Resultaat 
+bestemming 2023 Dotatie  Onttrekking  Saldo  
+31-12-2024 
+      
+Algemene reserve       
+- Publieke Gezondheid  2.409  223 - 300 2.333  
+Totaal algemene reserve  2.409  223 - 300 2.333  
+      
+Bestemmingsreserves       
+- JGZ 200 618 - 516 302 
+- Monitor Volwassenen  160 - 40 200 - 
+- Garantiesalarissen gemeente Utrecht  16 - - 16 - 
+- Aanbesteding nieuw DD -JGZ 338 - - 338 - 
+- Versterking vaccinatiegraad  - 500 - 200 300 
+- Reisadvies  - - - - - 
+- Renovatie De Dreef 5  154 - - 154 - 
+      
+Totaal bestemmingsreserves  868 1.118  40 1.424  602 
+      
+Totaal  3.277  1.341  40 1.724  2.935  
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    12 
+ 3.3.1  Toelichting mutaties reserves  
+GGDrU  kent een algemene reserve en een aantal specifieke bestemmingsreserves. In deze 
+paragraaf worden de reserves beknopt toegelicht.  
+ 
+â€¢ Algemene reserve â€“ deel Publieke Gezondheid (PG)  
+Saldo per 1  januari 20 24 is inclusief resultaatbestemming  2024 â‚¬ 2.633.000. Voor 20 24 
+is een onttrekking  van deze reserve begroot voor een bedrag van â‚¬  300.000. Dit betreft 
+de onttrekking voor de IV/IT strategie Ã  â‚¬ 200.000 en  â‚¬ 100.000 voor recruitment. 
+Beide conform het AB -besluit (5 juli 2023) bij de vaststelling van de begroting 2024 -
+0. Hier komt het saldo per jaareinde uit op â‚¬ 2.333.000. 
+ 
+â€¢ Bestemmingsreserve JGZ  
+Saldo per 1 januari 202 4 is inclusief resultaatbestemming 202 3 â‚¬ 818.000. Conform  
+het besluit  uit de resultaatbestemming 202 3 wordt â‚¬ 516.000 onttrokken ten behoeve 
+van de implementatie DD -JGZ. Het begrote saldo per 31 december 202 4 komt 
+daarmee  op â‚¬ 302.000.  
+ 
+â€¢ Bestemmingsreserve Monitor Volwassenen  
+Eens in de vier jaar wordt een gezondheidsmonitor onder volwassenen en senioren in 
+de regio Utrecht gehouden. Deze reserve is voor de dekking van de vierjaarlijkse 
+kosten van de uitvoering van deze monitor. De uitvoering van deze monitor staat 
+gepland voor  2024. Hierdoor is er in deze begroting een onttrekking opgenomen ter 
+dekking van deze uitvoering Ã  â‚¬ 200.000. Ook is de jaarlijkse dotatie Ã  â‚¬ 40.000 
+opgenomen als mutatie. Eind 2024 is deze bestemmingsreserve per saldo neutraal en 
+wordt in de aankomende vier jaar aangevuld voor de uitvoering in 2028.  
+ 
+â€¢ Bestemmingsreserve Garantiesalarissen Utrecht  
+Bij de overname van professionals van GG&GD Utrecht zijn enkele professionals 
+overgekomen, waarvan het feitelijke salaris hoger was dan het reguliere salaris van 
+onze organisatie. In het overdrachtsdocument is afgesproken dat de meerkosten 
+gedragen worden door de gemeente Utrecht. Om van een jaarlijkse nacalculatie af te 
+zijn is dit bedrag Ã©Ã©nmalig in reken ing te gebracht bij de gemeente Utrecht. Het gaat 
+om een totaalbedrag van â‚¬ 190.000. Start 2024 resteert een bedrag van ca. â‚¬ 16.000, 
+welke in 2024 onttrokken wordt en daarmee komt deze bestemmingsreserve op nul te 
+staan per ultimo 2024 en kan worden afges loten. De dekking van deze meerkosten zijn 
+structureel opgenomen in de meerjarenbegroting.  
+ 
+â€¢ Aanbesteding nieuw DD -JGZ  
+Conform besluit van het Algemeen Bestuur op 7 december 2022 is aan de JGZ -
+gemeenten een incidentele bijdrage in rekening gebracht van â‚¬ 500.000 en besloten 
+tot het instellen van een nieuwe bestemmingsreserve Aanbesteding nieuw DD -JGZ. Per 
+1 januari 202 4 staat deze reserve op â‚¬ 337.691. Op basis van de huidige planning zal 
+er in het jaar 202 4 een bedrag volledig worden onttrokken  en kan per ultimo 2024 
+worden afgesloten.  
+ 
+â€¢ Versterking vaccinatiegraad  
+Conform het besluit uit de resultaatbestemming 2023 wordt â‚¬ 500.000 gedoteerd aan 
+de nieuw in te stellen bestemmingsreserve versterking vaccinatiegraad. Het AB heeft 
+besloten  om â‚¬ 200.000 van het totaal in te zetten de voor pilots, dashboard en lobby. 
+Over de besteding van de resterende â‚¬ 300.000 zal het AB separaat besluiten op basis 
+van een concreet voorstel.  De verwachting is dat deze â‚¬ 200.000 in 2024 wordt besteed 
+en dat het saldo ultimo 2024 â‚¬ 300.000 betreft.  
+ 
+ 
+ 
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    13 
+ â€¢ Bestemmingsreserve Renovatie De Dreef 5  
+Saldo per 1 januari 202 4  is â‚¬ 153.815. De renovatie is afgelopen jaar afgerond en 
+daardoor kan het restant v rijvallen. Het voorstel is om het resterende bedrag te 
+onttrekken uit de bestemmingsreserve en dit naar rato terug te storten aan de 
+gemeenten.  Hiermee komt het saldo op nul en kan de bestemmingsreserve ultimo 
+2024 opgeheven worden.  
+ 
+3.3.2  Voorzieningen  
+ 
+Voorzieningen   
+(x â‚¬ 1.000)  Saldo  
+01-01-2024  Dotatie  Aanwending   Vrijval  Saldo  
+31-12-2024 
+Voorziening ter egalisering van kosten       
+- Groot onderhoud De Dreef (Zeist)  50 35 - - 85 
+      
+Voorziening voor verplichtingen en risico's       
+- Voorziening WW -uitkering 3e jaars 0,1%  135 - - - 135 
+- Saldo spaarverlof  663 340 -240 -25 738 
+      
+Totalen  847 375 -240 -25 957 
+3.3.3  Toelichting mutaties voorzieningen  
+ 
+â€¢ Groot  onderhoud Gebouwen: De Dreef 5 Zeist  
+GGDrU heeft sinds 2004 het gebouw De Dreef 5 in Zeist in eigendom als hoofdgebouw. 
+Toevoeging aan de voorziening voor onderhoud is onderbouwd door middel van een 
+meerjaren onderhoudsplan (MJOP). Medio 2023 is de renovatie van De Dreef 5 
+afgerond. Na afrond ing van de renovatie heeft GGDrU een externe MJOP -rapportage 
+laten opmaken. Hieruit komt naar voren dat de benodigde jaarlijkse dotatie van â‚¬ 
+35.000 gehandhaafd kan blijven.  
+ 
+â€¢ WW-uitkering 3e -jaars 0,1%  
+In het cao -akkoord 2016 -2017 is afgesproken om de versobering in de WW te 
+repareren. De omvang van de reparatie -uitkering maakt deze versobering in de WW 
+ongedaan. Voor 20 24 wordt nog niet voorzien dat er gebruik zal worden gemaakt van 
+deze regeling. Er wordt ook geen dotatie verricht, omdat vanuit de cao is onderhandeld  
+dat er tijdens de looptijd van deze cao geen reparatie uitkering ingehouden wordt.  
+ 
+â€¢ Voorziening Verlofsparen  
+In het BBV is bepaald dat voor arbeidskosten gerelateerde verplichtingen waarvan het 
+jaarlijkse bedrag geen gelijk volume heeft een voorziening dient te worden gevormd.  
+Per 2022 zijn de mogelijkheden in de cao -gemeenten voor verlofsparen uitgebreid 
+voor medewerkers. Naar aanleiding van de cao -wijziging heeft, met betrekking tot het 
+verlofsparen, een schattingswijziging plaatsgevonden. Voor 202 4 wordt voorzien dat 
+er ongeveer â‚¬ 240.000 wordt aangewend, doordat medewerkers vervroegd met 
+pensioen zijn gegaan door het  inzetten van het extra verlof , circa â‚¬ 25.000  doordat 
+medewerkers eerder uit dienst zijn gegaan en er â‚¬ 340.000 gedoteerd mo et worden 
+op basis van de en gespaarde bovenwettelijke verlofuren en nieuw aangekochte uren 
+voor het verlofsparen.   
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    14 
+ Balans  
+Deze begrotingswijziging heeft een verandering in de balans tot gevolg. In bijlage 3 is de 
+geprognosticeerde balans op basis van de bijgestelde (ontwerp) begroting 2024-1 
+weergegeven. De voorgeschreven kengetallen zijn ook in bijlage 3 opgenome n. 
+ 
+3.4 Overzicht investeringen  
+ 
+Investeringsoverzicht  
+(xâ‚¬ 1.000)  Krediet  
+31-12-2023 Toegekend 
+krediet   
+2024 -0 Mutatie  
+krediet 
+2024 -1 Beschikbaar 
+krediet  
+ 01-01-2024 Verwachte 
+investeringen in 
+2024 Krediet  
+31-12-2024 
+Meerjarige investeringsprojecten        
+- Bedrijfsgebouwen        
+Utrechtseweg 3 -5/Velduil Amersfoort  42 - - 42 - 42 
+Verbouwingen CB -locaties  - - 100 100 100 - 
+Totaal Bedrijfsgebouwen  42 - 100 142 100 42 
+       
+Reguliere vervangingsinvesteringen        
+       
+- Machines, apparaten en installaties        
+(medische) Apparatuur  467 - - 467 110 357 
+- Overige materiele activa        
+Inventaris  653 - - 653 97 556 
+Automatisering  1.129  335 - 1.464  1.425  39 
+- Vervoersmiddelen  - -  - - - 
+Totaal Reguliere vervangingsinvesteringen  2.249  335 - 2.584  1.632  952 
+       
+Totalen  2.291  335 100 2.726  1.732  994 
+ 
+Autorisatie van de investeringskredieten vindt plaats door middel van vaststelling van de 
+begroting en begrotingswijziging.  Voor 202 4 zijn de  reeds aangevraagde en geautoriseerde 
+investeringskredieten voldoende om de verwachte investeringen te kunnen uitvoeren .  
+ 
+De enige wijziging betreft de kredietaanvraag voor verbouwingen op enkele CB -locaties. 
+In overleg met de betreffende gemeenten is overeengekomen dat een aantal CB -locaties 
+wordt gerenoveerd. Om te voldoen aan de eisen van rechtmatigheid en correcte 
+adminis tratieve verwerking worden deze verbouwingen aangemerkt als investeringen, 
+waarvoor investeringskrediet nodig is. Deze investeringen leiden niet tot extra kosten voor 
+GGDrU, aangezien ze volledig worden gefinancierd door de desbetreffende gemeenten.   
+ 
+In de categorie medische apparatuur is het beschikbare krediet per 2024 ruim voldoende 
+om de benodigde investeringen te doen in onder andere audiometers en echoscreeners. 
+Ditzelfde geldt voor de inventaris, waaronder bureaustoelen, raambekleding, tafels en  
+koelkasten. Wat betreft de categorie Automatisering zal het grootste deel van het in 2024 
+beschikbare krediet worden besteed aan vervangingsinvesteringen, specifiek voor de 
+mobiele telefoons en notebooks van de medewerkers van GGDrU.  
+ 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    15 
+ 3.5 Bijdrag e per gemeente  
+ 
+Onderstaand is een overzicht opgenomen van de bijdragen per gemeente opgesplitst 
+naar kwadrant:  
+ 
+Gemeente  Basistaken  Intensivering 
+basistaken  Basistaken -plus  Maatwerk  Totale bijdrage  
+2024 -1 
+Amersfoort  1.545  52 5.440  2.259  9.296  
+Baarn  226 15 767 288 1.296  
+Bunnik  155 1 547 82 785 
+Bunschoten  189 11 807 183 1.189  
+De Bilt  392 4 1.489  159 2.044  
+De Ronde Venen  425 10 1.398  348 2.180  
+Eemnes  83 5 303 55 446 
+Houten  468 24 1.822  308 2.622  
+IJsselstein  293 33 1.089  344 1.759  
+Leusden  281 8 986 201 1.477  
+Lopik  148 1 470 120 739 
+Montfoort  131 6 459 135 731 
+Nieuwegein  566 12 1.933  681 3.191  
+Oudewater  97 2 327 83 510 
+Renswoude  53 - 222 29 304 
+Rhenen  184 - 684 101 969 
+Soest  414 23 1.482  348 2.267  
+Stichtse Vecht  632 15 2.115  581 3.343  
+Utrecht  1.989  113 320 981 3.402  
+Utrechtse Heuvelrug  490 24 1.596  183 2.293 
+Veenendaal  624 1 2.346  463 3.435  
+Vijfheerenlanden  549 48 1.986  542 3.126  
+Wijk bij Duurstede  223 9 745 123 1.101  
+Woerden  504 12 1.805  551 2.871  
+Woudenberg  146 9 521 85 761 
+Zeist  649 84 2.244  339 3.316  
+Totaal gemeenten  11.456  521 33.905  9.572 55.4 54 
+      
+Niet -gemeentelijke opbrengsten     31.814 
+      
+Totaal Bijdrage begroting 2024 -1       87.267 
+Bedragen x â‚¬ 1.000, -           
+   
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    16 
+ 4. VASTSTELLING  
+ 
+ 
+Dagelijks bestuur  
+Als begroting vastgesteld in de vergadering van het dagelijks bestuur op 11 september  
+2024 en aangeboden aan het algemeen bestuur ten behoeve van de vergadering op 4 
+december 20 24. 
+ 
+Het dagelijks bestuur van de Gemeentelijke Gezondheidsdienst regio Utrecht  
+ 
+de secretaris,       de voorzitter,  
+ 
+ 
+ 
+ 
+Dr. M . Sprenger      E. Eerenberg  Msc 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Algemeen bestuur  
+Vastgesteld door het algemeen bestuur van de Gemeentelijke Gezondheidsdienst regio 
+Utrecht in de openbare vergadering van 4 december 20 24. 
+ 
+ 
+ 
+ 
+de secretaris,       de voorzitter,  
+ 
+ 
+ 
+ 
+Dr. M . Sprenger      E. Eerenberg  Msc 
+ 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    17 
+ Bijlage 1. Structurele en incidentele effecten op  begrotingswijziging  
+ 
+In de begrotingswijziging doen zich structurele en incidentele wijzigingen voor. De 
+structurele wijzigingen hebben ook effect op de meerjarenbegroting en worden als zodanig 
+verwerkt in de (ontwerp) begroting swijziging  2024-1 en de jaren daarna. Met  de structurele 
+wijziging worden de baten en lasten bedoeld die voor onbepaalde tijd effect hebben op de 
+begroting. Een wijziging met een eindigend karakter wordt als incidenteel aangemerkt. In 
+onderstaande tabel is de begrotingswijziging vertaald naar de str ucture le en incidentele 
+wijzigingen.  Hiervoor is de tabel uit Â§ 2.2 als basis genomen.  
+ 
+ 
+ 
+  Structurele & Incidentele wijzigingen  Structureel  Incidenteel  
+(x â‚¬ 1.000)  Baten  Lasten  Saldo  Baten  Lasten  Saldo  
+Publieke Gezondheid  3.260  3.260  - 25.285  26.268  -983 
+        
+Geraamde totaal saldo van baten en lasten  3.260  3.260  - 25.285  26.268  -983 
+Mutaties reserves  - - - 983 - 983 
+Geraamd resultaat  3.260  3.260  - 26.268  26.268  - 
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    18 
+ Bijlage 2. Baten en lasten per taakveld  
+ 
+De GGDrU is verplicht  om conform het BBV een uitsplitsing naar uniforme taakvelden op 
+te stellen. Deze taakvelden  zijn zodanig in de begroting onderscheiden dat gemeenten de 
+bijbehorende taken met baten en lasten kunnen aggregeren in hun eigen begroting.  
+In het gewijzigde BBV worden baten en lasten van overhead niet meer onder de 
+afzonderlijke beleidsprogramma â€™s geregistreerd , maar centraal onder een afzonderlijk 
+taakveld. In deze (ontwerp) begrotingswijziging zijn de wijzigingen ook vertaald naar deze 
+programmaâ€™s, conform de richtlijnen uit de notitie overhead van de Commissie BBV.  
+ 
+Raming  per taakveld  2024 -1  
+ (x â‚¬ 1.000)  Baten  Lasten  Saldo  
+0.0 Bestuur en ondersteuning     
+0.1 Bestuur  - 80 -80 
+0.4 Overhead  3.377  18.203  -14.826  
+0.5 Treasury  550 50 500 
+0.8 Overige baten en lasten (onvoorzien)  - 126 -126 
+0.9 Vennootschapsbelasting  - - - 
+0.10 Mutaties reserves  1.724  40 1.684  
+0.11 Resultaat van de rekening baten en lasten  - - - 
+Subtotaal  5.651  18.499  -12.848  
+    
+1.0 Veiligheid     
+1.2 Openbare orde en veiligheid  2.707  2.707  - 
+Subtotaal  2.707  2.707  - 
+    
+6.0 Sociaal domein     
+6.1 Samenkracht en burgerparticipatie  2.367  2.367  - 
+Subtotaal  2.367  2.367  - 
+    
+7.0 Volksgezondheid en milieu     
+7.1 Volksgezondheid  76.290  63.442  12.848  
+7.5 Begraafplaatsen en crematoria  252 252 - 
+Subtotaal  76.542  63.694  12.848  
+    
+Geraamd resultaat  87.267  87.267  - 
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    19 
+ Bijlage 3. Geprognosticeerde balans en kengetallen  
+ 
+Kengetallen  Raming 
+2024 -0 Raming 
+2024 -1 
+Netto schuldquote  16,5%  12,6% 
+Netto schuldquote gecorrigeerd voor alle verstrekte leningen  16,5%  12,6% 
+Solvabiliteitsratio  10,9%  9,7%  
+Structurele exploitatieruimte  0,0%  0,0%  
+   
+ 
+Balans - Activa  
+(x â‚¬1.000)   Balans 2024  
+(Raming 2024 -1)  
+ Vaste activa   
+  
+ 1. MateriÃ«le vaste activa   
+ - Investeringen met een economisch nut  14.630    
+ 2. FinanciÃ«le vaste activa   
+ - Overige uitzettingen met een rentetypische looptijd >= 1 jaar  32 
+  
+ Vlottende activa   
+  
+ 3. Voorraden   
+ - Gereed product en handelsgoederen  52 
+  
+ 4. Uitzettingen rentetypische looptijd < 1 jaar   
+ - Vorderingen op openbare lichamen  2.000  
+ - Overige vorderingen  200 
+ - Uitzetting in 's Rijks schatkist  9.825  
+ 12.025  
+  
+ 5. Liquide middelen  300 
+  
+ 6. Overlopende activa   
+ - De van Europese en Nederlandse overheidslichamen nog te ontvangen 
+voorschotbedragen die ontstaan door voorfinanciering op uitkeringen met 
+een specifiek bestedingsdoel.  2.500  
+ - Overige nog te ontvangen bedragen en vooruitbetaalde bedragen die ten 
+laste van volgende begrotingsjaren komen.  750 
+ 3.250  
+  
+Totaal Activa  30.289  
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  GGD regio Utrecht    20 
+ Balans - Passiva  
+(x â‚¬1.000)   Balans 2024  
+(Raming 2024 -1)  
+ Vaste passiva   
+  
+ 7. Eigen vermogen   
+ - Algemene reserve  2.333  
+ - Overige bestemmingsreserves  602 
+ - Gerealiseerd resultaat  - 
+ 2.935  
+  
+ 8. Voorzieningen  957 
+  
+ 9. Vaste schulden  7.897  
+  
+ Vlottende passiva   
+  
+ 10. Netto -vlottende schulden met rentetypische looptijd < 1 jaar   
+ - Overige schulden  7.500  
+  
+ 11. Overlopende passiva   
+ - Verplichtingen opgenomen die in het begrotingsjaar zijn opgebouwd en die 
+in een volgend begrotingsjaar tot betaling komen.  1.500  
+ - De van Europese en/of Nederlandse overheidslichamen (vooruit)ontvangen 
+voorschotbedragen voor uitkeringen met een specifiek bestedingsdoel die 
+dienen ter dekking van lasten van volgende begrotingsjaren  9.500  
+ 11.000  
+  
+Totaal Passiva  30.289  
+  
+
+(ontwerp) Begrotingswijziging 202 4-1 
+ 
+  
+ 
+ 
+GGD regio Utrecht  
+Postbus 51  
+3700 AB Zeist  
+ 
+T 030 608 608 6  
+E info@ggdru.nl  
+I www.ggdru.nl  
+ 
+Uitgave  
+Â© GGD regio Utrecht  
+september  2024 
+
