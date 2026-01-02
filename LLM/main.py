@@ -2,6 +2,8 @@ import vertexai
 from vertexai.generative_models import GenerativeModel
 from google.oauth2 import service_account
 import json
+
+
 def get_project_id_from_file(service_account_path: str) -> str:
     """Extracts the project_id from the service account JSON file."""
     try:
@@ -17,6 +19,8 @@ def get_project_id_from_file(service_account_path: str) -> str:
         )
     except (json.JSONDecodeError, ValueError, KeyError) as e:
         raise RuntimeError(f"Error reading project_id from {service_account_path}: {e}")
+
+
 def generate_text_vertexai(
     project_id: str,
     location: str,
@@ -40,6 +44,8 @@ def generate_text_vertexai(
     except Exception as e:
         print(f"An error occurred during Vertex AI text generation: {e}")
         return ""
+
+
 if __name__ == "__main__":
     try:
         SERVICE_ACCOUNT_FILE = (
@@ -51,7 +57,7 @@ if __name__ == "__main__":
             USER_PROMPT = f.read()
         with open("document.txt", "r") as f:
             document_text = f.read().strip()
-        USER_PROMPT = (f"{USER_PROMPT} Text={document_text}")
+        USER_PROMPT = f"{USER_PROMPT} Text={document_text}"
         creds = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE
         )
