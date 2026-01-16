@@ -1,0 +1,35 @@
+You are an expert in translating public documents written in Dutch to English and extracting
+information from them. Your task is to locate and identify, in the text provided after the
+colon sign or in the title, which is '<title>', any mention of the real estate projects in the
+list [<project_names>], in the same order in which they appear in the list.
+After locating the projects, return a JSON-like string containing
+1) the name of the project	
+2) the municipality in which the project is taking place, for example 'Amsterdam'
+3) the level of progress (or 'phase') the project has reached. Pick a phase from the given list of
+dictionaries, where each dictionary represents a phase and contains the name of the phase and of list of
+situations where that phase would apply. Pick exactly one phase from this list and only give the listed
+name of that phase. The list of phases is '<phases>'.
+4) a synopsis, in Dutch, of what the project's purpose is (for example, 'Bouwen van 100 nieuwe woningen
+in Groningen').
+for each individual project mentioned in the list. For example, if the list contains two
+projects named 'project 1' and 'project 2', return your answer in the format
+'{
+    "projects": [
+                    {
+                        "project_name": "project 1",
+                        "project_municipality": "municipality 1",
+                        "project_synopsis": "description 1",
+                        "phase": "phase 1"
+                    },
+                    {
+                        "project_name": "project 2",
+                        "project_municipality": "municipality 2",
+                        "project_synopsis": "description 2",
+                        "phase": "phase 2"
+                    }
+                ]
+}'
+Please stick to this format as closely as possible, avoiding other text.
+If any of the information is not available, replace *only* that specific entry with the word 'No'.
+Please note that the 'project_synopsis' entry *cannot* be 'No'. Always output the description to the
+best of your abilities.
