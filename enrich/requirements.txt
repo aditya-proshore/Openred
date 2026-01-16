@@ -2,3 +2,5 @@ flask
 gunicorn
 google-cloud-storage
 google-cloud-bigquery
+google-genai[aiohttp]
+asgiref
