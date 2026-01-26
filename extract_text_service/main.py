@@ -1,223 +1,103 @@
-import base64
-import json
 import os
+import time
+import logging
+import threading
 import tempfile
 import hashlib
-import logging
-from datetime import datetime
-
 from flask import Flask, request, jsonify
-from google.cloud import storage, bigquery
-from pypdf import PdfReader
+from google.cloud import storage
+import pymupdf4llm
 from google.api_core.exceptions import PreconditionFailed
 
-# -----------------------
-# App + logging
-# -----------------------
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("extract")
+logger = logging.getLogger("extract-process")
 
-# -----------------------
-# Config
-# -----------------------
-RAW_BUCKET = os.environ.get("RAW_BUCKET", "poc_binod_nl_pdfs")
+# Configuration
 EXTRACTED_BUCKET = os.environ.get("EXTRACTED_BUCKET", "poc_extracted")
-STATUS_BUCKET = os.environ.get("STATUS_BUCKET", "poc_status")
-
-RAW_PREFIX = "raw/"
-OUT_PREFIX = "extracted/"
-STATUS_PREFIX = "status/"
-
-BQ_TABLE_ID = "houzr-280014.poc_binod.document_pipeline_status"
-
 storage_client = storage.Client()
-bq_client = bigquery.Client()
 
-# -----------------------
-# Helpers
-# -----------------------
-def make_document_id(bucket, name, generation):
-    raw = f"{bucket}/{name}:{generation}"
-    return hashlib.sha1(raw.encode()).hexdigest()
-
-def out_txt_name(pdf_name):
-    return OUT_PREFIX + pdf_name.rsplit("/", 1)[-1].replace(".pdf", ".txt")
-
-def status_marker_name(pdf_name):
-    return STATUS_PREFIX + pdf_name.rsplit("/", 1)[-1].replace(".pdf", ".status.json")
-
-def has_terminal_marker(pdf_name):
-    return storage_client.bucket(STATUS_BUCKET).blob(status_marker_name(pdf_name)).exists()
-
-def has_been_extracted(pdf_name):
-    return storage_client.bucket(EXTRACTED_BUCKET).blob(out_txt_name(pdf_name)).exists()
-
-def write_status_marker(pdf_name, status, message="", document_id=None):
-    payload = {
-        "document_id": document_id,
-        "pdf": pdf_name,
-        "status": status,
-        "message": message,
-        "ts": datetime.utcnow().isoformat(),
-    }
-    storage_client.bucket(STATUS_BUCKET).blob(
-        status_marker_name(pdf_name)
-    ).upload_from_string(json.dumps(payload), content_type="application/json")
-
-def extract_pdf_to_text(local_path):
-    reader = PdfReader(local_path)
-    texts = []
-    for page in reader.pages:
-        txt = page.extract_text()
-        if txt:
-            texts.append(txt)
-    return "\n\n".join(texts)
-
-# -----------------------
-# Race-safe BigQuery insert
-# -----------------------
-def insert_extract_status_safe(document_id, pdf_name, status, message=""):
-    """Insert row if document_id not exists, otherwise skip"""
-    check_query = f"""
-    SELECT 1 FROM `{BQ_TABLE_ID}`
-    WHERE document_id = @document_id
-    LIMIT 1
-    """
-    job_config = bigquery.QueryJobConfig(
-        query_parameters=[bigquery.ScalarQueryParameter("document_id", "STRING", document_id)]
-    )
-
-    result = bq_client.query(check_query, job_config=job_config).result()
-    if result.total_rows > 0:
-        logger.info(f"[doc={document_id}] BQ row already exists, skipping INSERT")
-        return False
-
-    insert_query = f"""
-    INSERT INTO `{BQ_TABLE_ID}` 
-    (document_id, pdf_name, extracted_status, enrich_status, bq_inserted_status,
-     extracted_retries, enrich_retries, bq_insert_retries, message, created_at, updated_at)
-    VALUES (@document_id, @pdf_name, @status, "PENDING", "PENDING", 0, 0, 0, @message, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())
-    """
-    insert_job_config = bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ScalarQueryParameter("document_id", "STRING", document_id),
-            bigquery.ScalarQueryParameter("pdf_name", "STRING", pdf_name),
-            bigquery.ScalarQueryParameter("status", "STRING", status),
-            bigquery.ScalarQueryParameter("message", "STRING", message),
-        ]
-    )
-
-    bq_client.query(insert_query, job_config=insert_job_config).result()
-    logger.info(f"[doc={document_id}] BQ INSERT SUCCESS")
-    return True
-
-# -----------------------
-# Download / Upload
-# -----------------------
-def download_blob_to_file(bucket_name, blob_name, file_path):
-    storage_client.bucket(bucket_name).blob(blob_name).download_to_filename(file_path)
-
-def upload_text_to_gcs(blob_name, text, metadata=None):
-    blob = storage_client.bucket(EXTRACTED_BUCKET).blob(blob_name)
-    blob.metadata = metadata or {}
+def extraction_worker(bucket_name, blob_name, doc_id):
+    """Background worker: Download -> Extract -> Forward Metadata -> Upload"""
+    t_start = time.perf_counter()
+    log_prefix = f"[extract][doc_id: {doc_id}]"
+    
     try:
-        blob.upload_from_string(text, content_type="text/plain", if_generation_match=0)
-        return True
-    except PreconditionFailed:
-        return False
+        # 1. GET THE BLOB OBJECT (This fetches the metadata)
+        bucket = storage_client.bucket(bucket_name)
+        source_blob = bucket.get_blob(blob_name) # Important: get_blob fetches metadata, bucket.blob() does not
+        
+        if not source_blob:
+            logger.error(f"{log_prefix} File not found: {blob_name}")
+            return
 
-# -----------------------
-# Cloud Run Handler
-# -----------------------
+        # 2. CAPTURE METADATA FROM SOURCE
+        # This is where we grab your 'issuing_body', 'source_url', etc.
+        source_metadata = source_blob.metadata or {}
+        logger.info(f"{log_prefix} Captured Metadata: {source_metadata}")
+
+        # 3. DOWNLOAD & CONVERT
+        with tempfile.NamedTemporaryFile(suffix=".pdf") as tmp_pdf:
+            source_blob.download_to_filename(tmp_pdf.name)
+            logger.info(f"{log_prefix} PDF Downloaded")
+            
+            # Using PyMuPDF4LLM for markdown extraction
+            markdown_content = pymupdf4llm.to_markdown(tmp_pdf.name)
+            
+            # 4. UPLOAD WITH FORWARDED METADATA
+            out_filename = f"extracted/{blob_name.rsplit('.', 1)[0]}.txt"
+            out_blob = storage_client.bucket(EXTRACTED_BUCKET).blob(out_filename)
+            
+            # Pass all metadata forward so the 'Enrich' service has it
+            out_blob.metadata = {
+                "document_id": source_metadata.get("document_id", doc_id),
+                "issuing_body": source_metadata.get("issuing_body", "Unknown"),
+                "document_date": source_metadata.get("document_date", ""),
+                "source_url": source_metadata.get("source_url", ""),
+                "original_pdf": f"gs://{bucket_name}/{blob_name}",
+                "extraction_status": "success",
+                "processed_at": str(time.time())
+            }
+            
+            # Atomic upload (replaces the "LOCKED" placeholder)
+            out_blob.upload_from_string(markdown_content, content_type="text/plain")
+            
+        logger.info(f"{log_prefix} SUCCESS: {out_filename} uploaded in {time.perf_counter()-t_start:.2f}s")
+
+    except Exception as e:
+        logger.error(f"{log_prefix} FATAL ERROR: {str(e)}")
+
 @app.route("/", methods=["POST"])
 def handler():
+    # Parse Eventarc GCS Payload
     event = request.get_json(silent=True) or {}
-    bucket = None
-    record = None
-    generation = event.get("generation")
+    
+    # Eventarc GCS sends 'bucket' and 'name'
+    bucket_name = event.get("bucket") or event.get("data", {}).get("bucket")
+    blob_name = event.get("name") or event.get("data", {}).get("name")
 
-    # Parse event
-    if "bucket" in event and "name" in event:
-        bucket = event["bucket"]
-        record = event["name"]
-    elif event.get("type") and event.get("data"):
-        data = event["data"]
-        bucket = data.get("bucket")
-        record = data.get("name")
-        generation = data.get("generation")
-    elif "message" in event and "data" in event["message"]:
-        try:
-            payload = base64.b64decode(event["message"]["data"]).decode()
-            payload_json = json.loads(payload)
-            bucket = payload_json.get("bucket")
-            record = payload_json.get("name")
-            generation = payload_json.get("generation")
-        except Exception:
-            logger.exception("FAILED TO PARSE PUBSUB EVENT")
-            return jsonify({"status": "ignored"}), 200
-
-    if not bucket or not record:
-        logger.warning("Ignored event with no bucket/name")
+    if not bucket_name or not blob_name or not blob_name.endswith(".pdf"):
         return jsonify({"status": "ignored"}), 200
 
-    if not record.startswith(RAW_PREFIX) or not record.lower().endswith(".pdf"):
-        logger.info(f"Ignored non-raw PDF object: {record}")
-        return jsonify({"status": "ignored"}), 200
+    doc_id = hashlib.sha1(blob_name.encode()).hexdigest()[:12]
+    out_filename = f"extracted/{blob_name.rsplit('.', 1)[0]}.txt"
+    out_blob = storage_client.bucket(EXTRACTED_BUCKET).blob(out_filename)
 
-    document_id = make_document_id(bucket, record, generation)
-    log_prefix = f"[doc={document_id}]"
-
-    logger.info(f"{log_prefix} PDF RECEIVED")
-
-    if has_been_extracted(record) or has_terminal_marker(record):
-        logger.info(f"{log_prefix} PDF SKIPPED (already extracted)")
-        return jsonify({"status": "skipped", "document_id": document_id}), 200
-
+    # 5. IDEMPOTENCY / LOCKING
     try:
-        tmpdir = tempfile.mkdtemp()
-        pdf_file = record.split("/")[-1]
-        local_pdf = os.path.join(tmpdir, pdf_file)
+        # upload_from_string with if_generation_match=0 is an atomic "create if not exists"
+        out_blob.metadata = {"extraction_status": "locked"}
+        out_blob.upload_from_string("LOCKED", if_generation_match=0)
+    except PreconditionFailed:
+        logger.info(f"[extract][doc_id: {doc_id}] SKIP: File already processing or done.")
+        return jsonify({"status": "skipped"}), 200
 
-        download_blob_to_file(RAW_BUCKET, record, local_pdf)
-        logger.info(f"{log_prefix} PDF DOWNLOADED")
+    # 6. INSTANT 200 RESPONSE (< 15s)
+    # Threading prevents Cloud Run from timing out the request
+    thread = threading.Thread(target=extraction_worker, args=(bucket_name, blob_name, doc_id))
+    thread.start()
 
-        # Validate PDF
-        with open(local_pdf, "rb") as f:
-            if f.read(5) != b"%PDF-":
-                logger.warning(f"{log_prefix} INVALID PDF")
-                write_status_marker(record, "INVALID_PDF", document_id=document_id)
-                insert_extract_status_safe(document_id, record, "FAILED", "invalid pdf")
-                return jsonify({"status": "ignored"}), 200
+    return jsonify({"status": "accepted", "doc_id": doc_id}), 200
 
-        logger.info(f"{log_prefix} PDF VALIDATED")
-
-        text = extract_pdf_to_text(local_pdf)
-        logger.info(f"{log_prefix} PDF CONVERTED TO TEXT")
-
-        out_name = out_txt_name(pdf_file)
-        uploaded = upload_text_to_gcs(
-            out_name,
-            text,
-            metadata={
-                "document_id": document_id,
-                "source_pdf": record,
-                "stage": "EXTRACT",
-            },
-        )
-
-        if uploaded:
-            write_status_marker(record, "EXTRACTED", out_name, document_id)
-            logger.info(f"{log_prefix} TXT UPLOADED TO BUCKET: {out_name}")
-            logger.info(f"{log_prefix} STATUS MARKER UPDATED")
-            insert_extract_status_safe(document_id, record, "SUCCESS", "text extracted")
-        else:
-            logger.info(f"{log_prefix} TXT SKIPPED (race condition detected, no BQ insert)")
-
-        return jsonify({"status": "ok", "document_id": document_id, "output": out_name}), 200
-
-    except Exception:
-        logger.exception(f"{log_prefix} DOCUMENT EXTRACT FAILED")
-        write_status_marker(record, "FAILED", "exception", document_id)
-        insert_extract_status_safe(document_id, record, "FAILED", "exception during extract")
-        return jsonify({"status": "failed", "document_id": document_id}), 200
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)

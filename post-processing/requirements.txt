@@ -1,0 +1,12 @@
+numpy==1.26.4
+# Async & Utils
+functions-framework==3.5.0
+asyncio==3.4.3
+
+flask==3.0.0
+gunicorn==21.2.0
+google-cloud-storage==2.13.0
+google-cloud-bigquery==3.13.0
+geopy==2.4.0
+shapely==2.0.1
+uvicorn==0.23.2
