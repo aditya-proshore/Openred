@@ -1,14 +1,14 @@
-# 📑 News Analysis Pipeline (Serverless v2.0)
+# News Analysis Pipeline (Serverless v2.0)
 
 A high-performance, event-driven microservices architecture on Google Cloud Platform (GCP). This pipeline migrates legacy Dataflow/Beam workloads to a reactive **Cloud Run + Eventarc** model, reducing costs and cold-start latency.
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 The system utilizes a **Chained Reactive Pattern**. Each service is decoupled and triggered via Google Cloud Storage (GCS) events managed by Eventarc.
 
-### 🔄 The Document Flow
+### The Document Flow
 1. **Extract Service:** PDF binary → Markdown text.
 2. **Enrich Service:** Markdown text → AI-Structured JSON (Gemini 2.0).
 3. **Newsworthy Service:** JSON → Spatial Validation & BigQuery Ingestion.
@@ -16,7 +16,7 @@ The system utilizes a **Chained Reactive Pattern**. Each service is decoupled an
 
 ---
 
-## 🔒 Engineering Principles
+## Engineering Principles
 
 ### 1. Distributed Locking & Idempotency
 To handle "at-least-once" delivery from Eventarc, services implement **Atomic GCS Locking**:
@@ -30,9 +30,9 @@ Context provided by the initial scraper (Issuing Body, Source URL, Date) is pres
 
 ---
 
-## 🛠️ Service Deep-Dive
+## Service Deep-Dive
 
-### 📂 Phase 1: Extract Service
+### Phase 1: Extract Service
 * **Runtime:** Python / Flask
 * **Engine:** `PyMuPDF4LLM`
 * **Key Function:** `extraction_worker()`
@@ -41,7 +41,7 @@ Context provided by the initial scraper (Issuing Body, Source URL, Date) is pres
     * Forwards the "Passport" metadata to the next bucket.
     * Uses `threading.Thread` to acknowledge Eventarc triggers in < 15s.
 
-### 🧠 Phase 2: Enrich Service
+### Phase 2: Enrich Service
 * **Runtime:** Python / AsyncIO
 * **Engine:** Gemini 2.0 Flash (Vertex AI)
 * **Key Functions:**
@@ -49,7 +49,7 @@ Context provided by the initial scraper (Issuing Body, Source URL, Date) is pres
     * `multi_label_classification_async()`: Identifies project mentions.
     * `extract_details_batched()`: Uses **`asyncio.gather`** for parallel AI extraction of multiple projects simultaneously.
 
-### 📍 Phase 3: Newsworthy Service
+### Phase 3: Newsworthy Service
 * **Runtime:** Python / Shapely / GeoPy
 * **Logic:**
     * **Cache-Aside Pattern:** Loads municipality geometry from `geometry_cache.json` in GCS to avoid slow (11s) BigQuery lookups.
@@ -57,7 +57,7 @@ Context provided by the initial scraper (Issuing Body, Source URL, Date) is pres
 
 ---
 
-## 🔍 Observability & Traceability
+## Observability & Traceability
 
 Every log entry across all services follows a standardized pattern using a unique `doc_id` (SHA-1 hash of the filename).
 
@@ -70,7 +70,7 @@ Query by `textPayload:"doc_id: <ID>"` to see the full lifecycle:
 
 ---
 
-## 🚀 Deployment & Migration
+## Deployment & Migration
 
 ### Prerequisites
 * **APIs:** `run.googleapis.com`, `eventarc.googleapis.com`, `aiplatform.googleapis.com`.

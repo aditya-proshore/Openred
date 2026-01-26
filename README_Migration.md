@@ -1,14 +1,14 @@
-# 🚀 Migration Plan: Dataflow to Serverless Cloud Run
+# Migration Plan: Dataflow to Serverless Cloud Run
 
 This document outlines the strategic transition from the legacy monolithic Apache Beam (Dataflow) pipeline to the new event-driven, microservices-based Cloud Run pipeline.
 
-## 📈 Executive Summary
+## Executive Summary
 * **Legacy:** Dataflow (Java/Python Beam) - Batch/Streaming, high cold-start cost, complex maintenance.
 * **Target:** Cloud Run (Python/Flask/AsyncIO) - Reactive, pay-per-use, sub-second scaling, decoupled stages.
 
 ---
 
-## 🛠 Phase 1: Infrastructure & Environment Setup
+## Phase 1: Infrastructure & Environment Setup
 Before initiating data flow, the following environment must be "frozen" and verified.
 
 - [ ] **Service Account (SA):** Create `news-pipeline-sa` with the IAM roles specified in `README.md`.
@@ -18,7 +18,7 @@ Before initiating data flow, the following environment must be "frozen" and veri
 
 ---
 
-## 🧪 Phase 2: Shadow Execution (Dual-Run)
+## Phase 2: Shadow Execution (Dual-Run)
 *Goal: Run both pipelines in parallel to verify data integrity without affecting production.*
 
 1. **Scraper Forking:** Modify the upstream Scraper to upload PDFs to **both** the legacy bucket and the new `gs://raw_pdf_ingest`.
@@ -29,7 +29,7 @@ Before initiating data flow, the following environment must be "frozen" and veri
 
 ---
 
-## 🚦 Phase 3: Gradual Cutover (Canary)
+## Phase 3: Gradual Cutover (Canary)
 *Goal: Shift a percentage of traffic to the new pipeline.*
 
 - [ ] **Step 1:** Disable Dataflow for a low-volume municipality/source.
@@ -39,7 +39,7 @@ Before initiating data flow, the following environment must be "frozen" and veri
 
 ---
 
-## 🧹 Phase 4: Decommissioning & Cleanup
+## Phase 4: Decommissioning & Cleanup
 Once 100% parity is confirmed over a 7-day window:
 
 1. **Stop Dataflow Jobs:** Cancel all remaining streaming or batch Dataflow jobs.
@@ -49,7 +49,7 @@ Once 100% parity is confirmed over a 7-day window:
 
 ---
 
-## 🆘 Rollback Plan
+## Rollback Plan
 In the event of a critical failure (e.g., Geocoding API limits reached, BQ merge conflicts):
 
 1. **Immediate Action:** Disable Eventarc triggers via `gcloud eventarc triggers delete [TRIGGER_NAME]`.
@@ -58,7 +58,7 @@ In the event of a critical failure (e.g., Geocoding API limits reached, BQ merge
 
 ---
 
-## 📊 Success Metrics
+## Success Metrics
 | Metric | Success Threshold |
 | :--- | :--- |
 | **Latency** | End-to-end processing < 2 minutes |
