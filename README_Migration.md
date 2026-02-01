@@ -53,7 +53,8 @@ The service requires access to **Secret Manager** for API keys (`GEMINI_API_KEY`
 gcloud run deploy duplication-adapter \
   --image gcr.io/houzr-280014/duplication-adapter \
   --region europe-west4 \
-  --set-env-vars ENVIRONMENT=production,TARGET_BUCKET=newsradar
+  --set-env-vars ENVIRONMENT=production,TARGET_BUCKET=newsradar 
+```
 
 ## 5. Deployment Strategy
 
