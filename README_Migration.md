@@ -6,8 +6,11 @@ The **Duplication Preprocessing Adapter** is a stateless Cloud Run microservice 
 Beyond simple field mapping, this service utilizes **Generative AI (Gemini)** and **Google Maps API** to ensure every lead has high-fidelity descriptions and precise spatial coordinates before entering the duplication check.
 
 ---
-
 ## 2. Migration Plan & Flow Logic
+The system follows an asynchronous **Event-Pull** pattern to ensure the duplication script always works with the most accurate, geocoded data committed to the database.
+
+![Architecture Diagram](phase-2.png)
+
 1.  **Commit**: Records are saved to `projects_newsworthy`, `event_newsworthy`, or `expansion_area_newsworthy`.
 2.  **Notify**: Pub/Sub carries the `document_id` and `category` to the Adapter.
 3.  **Fetch**: The Adapter pulls the raw record from BigQuery.
