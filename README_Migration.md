@@ -64,7 +64,7 @@ gcloud run deploy duplication-adapter \
   --image gcr.io/houzr-280014/duplication-adapter \
   --region europe-west4 \
   --set-env-vars ENVIRONMENT=production,TARGET_BUCKET=newsradar
-
+```
 # Migration Plan: Dataflow to Serverless Cloud Run
 
 This document outlines the strategic transition from the legacy monolithic Apache Beam (Dataflow) pipeline to the new event-driven, microservices-based Cloud Run pipeline.
