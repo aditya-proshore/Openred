@@ -1,3 +1,63 @@
+# Duplication Preprocessing Adapter (Phase 1.5)
+
+## 1. Overview
+The **Duplication Preprocessing Adapter** is a stateless Cloud Run microservice that acts as the technical "Glue" between the **Newsworthy Extraction Service** and the **1042-line Duplication Logic**. 
+
+It solves the schema and structural gaps between modern BigQuery tables and legacy processing scripts by performing a real-time **Pull-Transform-Handoff** workflow.
+
+---
+
+## 2. Migration Plan & Flow Logic
+The system follows an asynchronous **Event-Pull** pattern to ensure the duplication script always works with the most accurate, geocoded data committed to the database.
+
+### Step-by-Step Flow:
+1.  **Commit**: The Extraction Service writes enriched records to BigQuery (`projects_newsworthy`).
+2.  **Notify**: Upon success, a Pub/Sub message is published containing only the `document_id` and `category`.
+3.  **Trigger**: The **Preprocessing Adapter** is invoked via a Pub/Sub Push subscription.
+4.  **Fetch**: The Adapter queries the specific row from BigQuery using the `document_id`.
+5.  **Transform**: The Adapter maps the modern schema to the legacy JSON format.
+6.  **Handoff**: The Adapter saves the JSON to GCS and triggers the 1042-line duplication job.
+
+---
+
+## 3. Adapter Technical Blueprint
+
+### Core Functions & Responsibilities
+| Function Component | Task | Technical Detail |
+| :--- | :--- | :--- |
+| **`fetch_source_record`** | Data Retrieval | Executes a parameterized `SELECT` from BQ using `source_id`. |
+| **`schema_transformer`** | Compatibility | Maps `unit_count` → `number_of_properties` and `name` → `project_name`. |
+| **`spatial_handler`** | Coordinate Sync | Ensures `latitude`/`longitude` are extracted as float values for legacy math. |
+| **`serialization_helper`** | Type Casting | Converts `DATE` objects to `YYYY-MM-DD` strings via `format_timestamp`. |
+| **`filter_logic`** | Validation | Executes `is_about_refugees` (AZC) and `extract_houses` (min. 6 units) checks. |
+| **`gcs_sink_finalizer`** | Trigger Handoff | Uploads JSON to `gs://newsradar/project_duplicate_check_input/{id}.json`. |
+
+---
+
+## 4. Operational Excellence
+
+### Resilience & Error Handling
+- **Dead Letter Queue (DLQ)**: Failed transformations are automatically routed to `topic-duplication-dlq` after 5 retries to prevent pipeline blockages.
+- **State Reconciliation (Safety Net)**: A scheduled job identifies any `source_id` present in extraction tables but missing from duplication status tables to trigger manual replays.
+- **Acknowledge Management**: The Adapter only ACKs the Pub/Sub message *after* the GCS upload and the next-stage trigger are confirmed.
+
+### Filtering & Quality Control
+The Adapter performs an automated quality gate before passing data to Phase 2:
+- **Project Scale**: Skips non-tender/non-housing projects with fewer than 6 units.
+- **Content Filtering**: Uses regex patterns to identify and skip Asylum Seeker Centers (AZC).
+- **Location Validation**: Compares geocodes against municipality centroids to flag imputed vs. actual project locations.
+
+---
+
+## 5. Deployment Strategy
+
+```bash
+# Deploying the Adapter to Cloud Run
+gcloud run deploy duplication-adapter \
+  --image gcr.io/houzr-280014/duplication-adapter \
+  --region europe-west4 \
+  --set-env-vars ENVIRONMENT=production,TARGET_BUCKET=newsradar
+
 # Migration Plan: Dataflow to Serverless Cloud Run
 
 This document outlines the strategic transition from the legacy monolithic Apache Beam (Dataflow) pipeline to the new event-driven, microservices-based Cloud Run pipeline.
@@ -62,6 +122,5 @@ In the event of a critical failure (e.g., Geocoding API limits reached, BQ merge
 | Metric | Success Threshold |
 | :--- | :--- |
 | **Latency** | End-to-end processing < 2 minutes |
-| **Cost** | > 50% reduction vs Dataflow instance costs |
 | **Accuracy** | > 98% parity with legacy extraction |
 | **Uptime** | 99.9% (Eventarc/Cloud Run availability) |
