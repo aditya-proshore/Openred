@@ -16,7 +16,7 @@ The system follows an asynchronous **Event-Pull** pattern to ensure the duplicat
 3.  **Trigger**: The **Preprocessing Adapter** is invoked via a Pub/Sub Push subscription.
 4.  **Fetch**: The Adapter queries the specific row from BigQuery using the `document_id`.
 5.  **Transform**: The Adapter maps the modern schema to the legacy JSON format.
-6.  **Handoff**: The Adapter saves the JSON to GCS and triggers the 1042-line duplication job.
+6.  **Handoff**: The Adapter saves the JSON to GCS and triggers the final Duplication Process Cloud Run.
 
 ---
 
