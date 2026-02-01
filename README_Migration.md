@@ -1,7 +1,7 @@
-# Duplication Preprocessing Adapter (Phase 1.5)
+# Duplication Preprocessing Adapter
 
 ## 1. Overview
-The **Duplication Preprocessing Adapter** is a stateless Cloud Run microservice that acts as the technical "Glue" between the **Newsworthy Extraction Service** and the **1042-line Duplication Logic**. 
+The **Duplication Preprocessing Adapter** is a stateless Cloud Run microservice that acts as the technical "Glue" between the **Newsworthy Extraction Service** and the **Duplication Process stage**. 
 
 It solves the schema and structural gaps between modern BigQuery tables and legacy processing scripts by performing a real-time **Pull-Transform-Handoff** workflow.
 
