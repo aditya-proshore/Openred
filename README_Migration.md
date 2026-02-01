@@ -11,7 +11,7 @@ It solves the schema and structural gaps between modern BigQuery tables and lega
 The system follows an asynchronous **Event-Pull** pattern to ensure the duplication script always works with the most accurate, geocoded data committed to the database.
 
 ### Step-by-Step Flow:
-1.  **Commit**: The Extraction Service writes enriched records to BigQuery (`projects_newsworthy`).
+1.  **Commit**: The Extraction Service writes enriched records to BigQuery (`projects_newsworthy, event_newsworthy and expansion_area_newsworthy`).
 2.  **Notify**: Upon success, a Pub/Sub message is published containing only the `document_id` and `category`.
 3.  **Trigger**: The **Preprocessing Adapter** is invoked via a Pub/Sub Push subscription.
 4.  **Fetch**: The Adapter queries the specific row from BigQuery using the `document_id`.
