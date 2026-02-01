@@ -28,7 +28,7 @@ Beyond simple field mapping, this service utilizes **Generative AI (Gemini)** an
 | **`fill_blanks_with_ai`** | **LLM Enrichment** | Calls **Gemini-1.5-Pro** to refine project names, descriptions, and property counts via web search grounding. |
 | **`handle_location`** | **Coordinate Sync** | Attempts **Google Maps Geocoding** for specific addresses; falls back to **Centroid Lookups** for general municipalities. |
 | **`filter_logic`** | Validation | Executes `is_about_refugees` (AZC) and `extract_houses` (minimum 6 units) checks. |
-| **`schema_transformer`** | Compatibility | Maps modern keys to legacy keys (e.g., `unit_count` → `number_of_properties`). |
+| **`schema_transformer`** | Compatibility | Maps new keys to legacy keys (e.g., `unit_count` → `number_of_properties`). |
 | **`gcs_sink_finalizer`** | Trigger Handoff | Uploads JSON to `gs://newsradar/project_duplicate_check_input/{id}.json` and invokes the next Cloud Run Job. |
 
 ---
