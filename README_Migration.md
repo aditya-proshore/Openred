@@ -1,53 +1,60 @@
-# Duplication Preprocessing Adapter
+# Duplication Preprocessing Adapter (Phase 1.5)
 
 ## 1. Overview
-The **Duplication Preprocessing Adapter** is a stateless Cloud Run microservice that acts as the technical "Glue" between the **Newsworthy Extraction Service** and the **Duplication Process stage**. 
+The **Duplication Preprocessing Adapter** is a stateless Cloud Run microservice acting as the technical "Glue" and "Enrichment Engine" between **Extraction** and **Duplication**.
 
-It solves the schema and structural gaps between modern BigQuery tables and legacy processing scripts by performing a real-time **Pull-Transform-Handoff** workflow.
+Beyond simple field mapping, this service utilizes **Generative AI (Gemini)** and **Google Maps API** to ensure every lead has high-fidelity descriptions and precise spatial coordinates before entering the duplication check.
 
 ---
 
 ## 2. Migration Plan & Flow Logic
-The system follows an asynchronous **Event-Pull** pattern to ensure the duplication script always works with the most accurate, geocoded data committed to the database.
-
-### Step-by-Step Flow:
-1.  **Commit**: The Extraction Service writes enriched records to BigQuery (`projects_newsworthy, event_newsworthy and expansion_area_newsworthy`).
-2.  **Notify**: Upon success, a Pub/Sub message is published containing only the `document_id` and `category`.
-3.  **Trigger**: The **Preprocessing Adapter** is invoked via a Pub/Sub Push subscription.
-4.  **Fetch**: The Adapter queries the specific row from BigQuery using the `document_id`.
-5.  **Transform**: The Adapter maps the modern schema to the legacy JSON format.
-6.  **Handoff**: The Adapter saves the JSON to GCS and triggers the final Duplication Process Cloud Run.
+1.  **Commit**: Records are saved to `projects_newsworthy`, `event_newsworthy`, or `expansion_area_newsworthy`.
+2.  **Notify**: Pub/Sub carries the `document_id` and `category` to the Adapter.
+3.  **Fetch**: The Adapter pulls the raw record from BigQuery.
+4.  **Enrich (Intelligence Layer)**: 
+    * **LLM Call**: If description or property counts are missing/thin, the Adapter calls Gemini to research the project.
+    * **Geocoding**: If coordinates are missing, it calls Google Maps API or falls back to Municipality Centroids.
+5.  **Transform**: Data is mapped to legacy JSON format.
+6.  **Handoff**: Final JSON is saved to GCS, triggering the Duplication Process Cloud Run.
 
 ---
 
-## 3. Adapter Technical Blueprint
+## 3. Adapter Technical Blueprint: Intelligence & Logic
 
 ### Core Functions & Responsibilities
 | Function Component | Task | Technical Detail |
 | :--- | :--- | :--- |
 | **`fetch_source_record`** | Data Retrieval | Executes a parameterized `SELECT` from BQ using `source_id`. |
-| **`schema_transformer`** | Compatibility | Maps `unit_count` → `number_of_properties` and `name` → `project_name`. |
-| **`spatial_handler`** | Coordinate Sync | Ensures `latitude`/`longitude` are extracted as float values for legacy math. |
-| **`serialization_helper`** | Type Casting | Converts `DATE` objects to `YYYY-MM-DD` strings via `format_timestamp`. |
-| **`filter_logic`** | Validation | Executes `is_about_refugees` (AZC) and `extract_houses` (min. 6 units) checks. |
-| **`gcs_sink_finalizer`** | Trigger Handoff | Uploads JSON to `gs://newsradar/project_duplicate_check_input/{id}.json`. |
+| **`fill_blanks_with_ai`** | **LLM Enrichment** | Calls **Gemini-1.5-Pro** to refine project names, descriptions, and property counts via web search grounding. |
+| **`handle_location`** | **Coordinate Sync** | Attempts **Google Maps Geocoding** for specific addresses; falls back to **Centroid Lookups** for general municipalities. |
+| **`filter_logic`** | Validation | Executes `is_about_refugees` (AZC) and `extract_houses` (minimum 6 units) checks. |
+| **`schema_transformer`** | Compatibility | Maps modern keys to legacy keys (e.g., `unit_count` → `number_of_properties`). |
+| **`gcs_sink_finalizer`** | Trigger Handoff | Uploads JSON to `gs://newsradar/project_duplicate_check_input/{id}.json` and invokes the next Cloud Run Job. |
 
 ---
 
 ## 4. Operational Excellence
 
-### Resilience & Error Handling
-- **Dead Letter Queue (DLQ)**: Failed transformations are automatically routed to `topic-duplication-dlq` after 5 retries to prevent pipeline blockages.
-- **State Reconciliation (Safety Net)**: A scheduled job identifies any `source_id` present in extraction tables but missing from duplication status tables to trigger manual replays.
-- **Acknowledge Management**: The Adapter only ACKs the Pub/Sub message *after* the GCS upload and the next-stage trigger are confirmed.
-
-### Filtering & Quality Control
-The Adapter performs an automated quality gate before passing data to Phase 2:
+### Intelligence & Filtering (Quality Gate)
+- **AI-Driven Enrichment**: Triggered only if `source_type` is not from a high-quality source (like Nieuwbouw.nl) or if `has_valid_location` is false.
 - **Project Scale**: Skips non-tender/non-housing projects with fewer than 6 units.
 - **Content Filtering**: Uses regex patterns to identify and skip Asylum Seeker Centers (AZC).
-- **Location Validation**: Compares geocodes against municipality centroids to flag imputed vs. actual project locations.
+
+### Resilience & Error Handling
+- **Dead Letter Queue (DLQ)**: Failed transformations/API timeouts route to `topic-duplication-dlq` after 5 retries.
+- **Safety Net**: An hourly reconciliation query identifies leads that finished post-processing but failed to enter the duplication stage.
+- **Acknowledge Management**: The Adapter only ACKs the Pub/Sub message *after* the GCS upload and the next-stage trigger are confirmed.
 
 ---
+
+## 5. Deployment & Configuration
+The service requires access to **Secret Manager** for API keys (`GEMINI_API_KEY`, `Maps_API_KEY`).
+
+```bash
+gcloud run deploy duplication-adapter \
+  --image gcr.io/houzr-280014/duplication-adapter \
+  --region europe-west4 \
+  --set-env-vars ENVIRONMENT=production,TARGET_BUCKET=newsradar
 
 ## 5. Deployment Strategy
 
