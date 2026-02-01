@@ -31,7 +31,6 @@ Beyond simple field mapping, this service utilizes **Generative AI (Gemini)** an
 | **`schema_transformer`** | Compatibility | Maps new keys to legacy keys (e.g., `unit_count` → `number_of_properties`). |
 | **`gcs_sink_finalizer`** | Trigger Handoff | Uploads JSON to `gs://newsradar/project_duplicate_check_input/{id}.json` and invokes the next Cloud Run Job. |
 
----
 
 ## 4. Operational Excellence
 
