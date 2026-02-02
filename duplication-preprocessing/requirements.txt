@@ -1,0 +1,7 @@
+flask
+google-cloud-storage
+google-cloud-bigquery
+google-cloud-secret-manager
+google-cloud-logging
+google-genai
+gunicorn
