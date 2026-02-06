@@ -1,0 +1,26 @@
+flask
+gunicorn
+google-cloud-storage
+google-cloud-bigquery
+pypdf
+# flask[async]>=3.0.0
+# asgiref>=3.7.2
+# gunicorn>=21.2.0
+# uvicorn[standard]>=0.27.0
+# uvloop>=0.19.0
+# google-cloud-storage>=2.14.0
+# google-cloud-bigquery>=3.15.0
+# pymupdf4llm>=0.0.12
+# PyMuPDF>=1.23.22
+
+# # Web Server
+# flask>=3.0.0
+# gunicorn>=21.2.0
+
+# # Google Cloud Services
+# google-cloud-storage>=3.0.0
+# google-cloud-bigquery>=3.40.0
+
+# # PDF Processing
+# pymupdf4llm>=0.0.17
+# pymupdf>=1.24.0
